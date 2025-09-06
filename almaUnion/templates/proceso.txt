@@ -4,3 +4,6 @@ Se crea prototipos para el menu principal y registro
 Viernes 5 de Septiembre:
 -Se crea prototipo para inicio de sesion. 
 -Se inicia la configuracion del back-end
+-Al tratar ingresar las imagenes en pantalla, no se pudo visualizar en pantalla ya que
+se creo la carpeta "static" en un lugar que no se debia. Mas que no se debia
+la carpeta setings no encontraban la carpeta static
