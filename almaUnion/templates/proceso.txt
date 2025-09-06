@@ -1,0 +1,6 @@
+Miercoles 3 de Septiembre:
+Se crea prototipos para el menu principal y registro
+
+Viernes 5 de Septiembre:
+-Se crea prototipo para inicio de sesion. 
+-Se inicia la configuracion del back-end
