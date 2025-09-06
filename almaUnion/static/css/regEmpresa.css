@@ -1,0 +1,159 @@
+:root {
+  --primary-color: #ea2a33;
+  --bg-color: #0f172a;
+  --gray-dark: #1e293b;
+  --gray-medium: #334155;
+  --gray-light: #cbd5e1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  border-bottom: 1px solid var(--gray-dark);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.logo h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--gray-light);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: white;
+}
+
+.btn-login {
+  background-color: var(--gray-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white !important;
+}
+
+.btn-login:hover {
+  background-color: var(--gray-medium);
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 2rem;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.form-container h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-container p {
+  font-size: 0.9rem;
+  color: var(--gray-light);
+  margin-bottom: 2rem;
+}
+
+.form-container p a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.form-container p a:hover {
+  color: #b91c1c;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+form input,
+form select {
+  padding: 0.75rem;
+  background-color: var(--gray-dark);
+  border: 1px solid var(--gray-medium);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+form input::placeholder {
+  color: var(--gray-light);
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.btn-register {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 0.9rem;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-register:hover {
+  background-color: #b91c1c;
+}

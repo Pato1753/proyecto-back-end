@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from almaUnionApp.views import renderMenuInicial
+from almaUnionApp.views import renderMenuInicial, renderRegEmpresa
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("inicio/",renderMenuInicial)
+    path("inicio/",renderMenuInicial),
+    path("registro-empresa/",renderRegEmpresa)
 ]
