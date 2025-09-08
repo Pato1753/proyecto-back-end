@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>AlmaUnion - Registro de Empresas</title>
-  <link rel="stylesheet" href="{%static "css/regEmpresa.css" %}">
+  <link rel="stylesheet" href="{% static 'css/registroEmpresa.css' %}">
 </head>
 <body>
   <!-- HEADER -->
@@ -26,8 +27,8 @@
     <div class="form-container">
       <h2>Regístrate como Empresa</h2>
       <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
-
-      <form>
+      <form method='post' action="{% url 'hubEmpresa' %}"> 
+        {% csrf_token %}
         <input type="text" placeholder="Nombre de la empresa" required>
         <input type="text" placeholder="RUT de la empresa" required>
         <select required>

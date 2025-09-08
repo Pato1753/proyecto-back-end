@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RegistroEmpresa</title>
+    <link rel="stylesheet" href="{% static 'css/registroEmpresa.css' %}" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon"></div>
+        <h1>InfluencerConnect</h1>
+      </div>
+      <nav class="nav">
+        <a href="#">Inicio</a>
+        <a href="#">Influencers</a>
+        <a href="#">Empresas</a>
+        <a href="#">Precios</a>
+        <a href="#" class="btn-login">Iniciar Sesión</a>
+      </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="form-container">
+        <h2>Regístrate como Influencer</h2>
+        <form method="post" action="{% url 'hubInfluencer' %}">
+          {% csrf_token %}
+          <label for="nombre"></label>
+          <input
+            id="nombre"
+            type="text"
+            name="nombre"
+            placeholder="Ingresa tu nombre"
+            required
+          />
+          <label for="apellido_paterno"></label>
+          <input
+            id="apellido_paterno"
+            type="text"
+            name="apellido_paterno"
+            placeholder="Ingresa tu apellido paterno"
+            required
+          />
+          <label for="apellido_materno"></label>
+          <input
+            id="apellido_materno"
+            type="text"
+            name="apellido_materno"
+            placeholder="Ingresa tu apellido materno"
+            required
+          />
+          <button type="submit" class="btn-register">Registrarse</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

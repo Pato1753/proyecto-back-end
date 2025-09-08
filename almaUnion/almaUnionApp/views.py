@@ -1,8 +1,17 @@
 from django.shortcuts import render
 
 # Create your views here.
-def renderMenuInicial(request):
-    return render(request, "templatesApp/menuInicial.html")
+def renderTemplateMenuInicial(request):
+    return render(request, "templatesApp/templateMenuInicial.html")
 
-def renderRegEmpresa(request):
-    return render(request, "templatesApp/regEmpresa.html")
+def renderTemplateRegistroEmpresa(request):
+    return render(request, "templatesApp/templateRegistroEmpresa.html")
+
+def renderTemplateRegistroInfluencer(request):
+    return render(request, "templatesApp/templateRegistroInfluencer.html")
+
+def renderTemplateHubEmpresa(request):
+    return render(request, "templatesApp/templateHubEmpresa.html")
+
+def renderTemplateHubInfluencer(request):
+    return render(request, "templatesApp/templateHubInfluencer.html")

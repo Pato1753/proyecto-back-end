@@ -7,3 +7,4 @@ Viernes 5 de Septiembre:
 -Al tratar ingresar las imagenes en pantalla, no se pudo visualizar en pantalla ya que
 se creo la carpeta "static" en un lugar que no se debia. Mas que no se debia
 la carpeta setings no encontraban la carpeta static
+

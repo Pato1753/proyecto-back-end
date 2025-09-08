@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from almaUnionApp.views import renderMenuInicial, renderRegEmpresa
+from almaUnionApp.views import renderTemplateMenuInicial, renderTemplateRegistroEmpresa, renderTemplateRegistroInfluencer, renderTemplateHubEmpresa, renderTemplateHubInfluencer
 urlpatterns = [
+    # Agrupación path admin 
     path('admin/', admin.site.urls),
-    path("inicio/",renderMenuInicial),
-    path("registro-empresa/",renderRegEmpresa)
+    # Agrupación path Menu inicial
+    path("inicio/", renderTemplateMenuInicial, name='inicio'),
+    # Agrupación path Registro de usuario
+    path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
+    path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
+    # Agrupación path redirección al Hub
+    path("hubEmpresa/", renderTemplateHubEmpresa, name='hubEmpresa'),
+    path("hubInfluencer/", renderTemplateHubInfluencer, name='hubInfluencer'),
 ]
