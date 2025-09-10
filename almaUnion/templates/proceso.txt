@@ -8,3 +8,21 @@ Viernes 5 de Septiembre:
 se creo la carpeta "static" en un lugar que no se debia. Mas que no se debia
 la carpeta setings no encontraban la carpeta static
 
+Martes 09 de Semtiembre:
+Escritor: Marcelo Ramos
+- Se organizarón los multiples imports del documento "urls.py". Utilizando la guia de PEP, especificamente "PEP 328 – Imports: Multi-Line and Absolute/Relative"urls.py". En formato, un salto de linea por cada 2 imports. Se realizo la acción con el proposito de mejorar la visibilidad de las importaciones.
+- Se agruparón los path según su proporsito de redirección, como: admin,Menu inicial, registro de usuario, redirección al hub, redirecciones del aside comunes influencer-Empresa, redirección aside empresa, redirección aside infleuncers. Utilizando de limitador los comentarios
+- Se agregaron las siguientes path: perfil/, configuracion/, influencers/, campanias/, mensajes/, pagos/, oportunidades/, informes/.
+- Se importaron las siguientes import: renderTemplateCampanias, renderTemplateConfiguracion, renderTemplateInfluencers, renderTemplateInformes, renderTemplateMensajes, renderTemplatePagos, renderTemplateOportunidades, renderTemplatePerfil
+- Se agregaron al path y se agregaron sus nombres en las variables name. Con el proposito, de utilizarse en su redirección con la funcion {% url name %}.
+- Se crearon y adaparon las funciones renderTemplateConfiguracion, renderTemplatePerfil, renderTemplateOportunidades, renderTemplateInformes, renderTemplateInfluencers, renderTemplateCampanias, renderTemplateMensajes, renderTemplatePagos.
+- Se agrego y adapto la funcion renderTemplateHubInfluencer, las variables infoPerfil y botones. Se agregaron información en formato json para ser utilizado en la plantilla templateBaseHub.
+- Se agrego y adapto la funcion renderTemplateHubEmpresa, las variables infoPerfil y botones. Se agregaron información en formato json para ser utilizado en la plantilla templateBaseHub.
+- Se creo el archivo "assets" dentro de la carpeta static
+- Se agregaron multiples elementos que se utilizaran en  el componente "asideButton.html"
+- Fueron creados dentro del archivo css, los documentos de css "hubAsideButton.css" y "baseHub.css" 
+- Fue creado dentro del archivo templates, el archivo components. Con el proposito de separar los componentes reutilizables de template padre "templateBaseHub".
+- Fue creado dentro del archivo components, el documento "asideButton.html"
+- Fueron creados dentro del archivo "templatesApp", multiples plantillas, las cuales fueron: templateBaseHub.html, templateCampanias.html, templateInfluencers.html, templateInformes.html, templateMensajes.html, templateOportunidades.html, templatePagos.html, templatePerfil.html.
+- Fue implementado y habilitado el componente "asideButton" en la plantilla "TemplateBaseHub".
+- Se logro visualizar el uso del componenete "asideButton" y su css personal.
