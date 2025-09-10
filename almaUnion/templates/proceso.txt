@@ -26,3 +26,7 @@ Escritor: Marcelo Ramos
 - Fueron creados dentro del archivo "templatesApp", multiples plantillas, las cuales fueron: templateBaseHub.html, templateCampanias.html, templateInfluencers.html, templateInformes.html, templateMensajes.html, templateOportunidades.html, templatePagos.html, templatePerfil.html.
 - Fue implementado y habilitado el componente "asideButton" en la plantilla "TemplateBaseHub".
 - Se logro visualizar el uso del componenete "asideButton" y su css personal.
+
+Miercoles 10 de Septiembre:
+-Se actualiza el registro de usuario
+-Se añade template de login con su respectivo diseño

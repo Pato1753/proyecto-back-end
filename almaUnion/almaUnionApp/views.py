@@ -50,6 +50,9 @@ def renderTemplatePerfil(request):
     return render(request, "templatesApp/templatePerfil.html")
 
 # Render para influencer
+def renderTemplatesLogin(request):
+    return render(request, "templatesApp/templatesLoginInflu.html")
+
 def renderTemplateOportunidades(request):
     return render(request, "templatesApp/templateOportunidades.html")
 
