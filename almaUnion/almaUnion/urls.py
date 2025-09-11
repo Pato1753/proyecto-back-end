@@ -22,7 +22,10 @@ from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistr
                                 renderTemplateConfiguracion, renderTemplateInfluencers,
                                 renderTemplateInformes, renderTemplateMensajes,
                                 renderTemplatePagos, renderTemplateOportunidades,
-                                renderTemplatePerfil)
+                                renderTemplatePerfil, renderTemplateCrearCampanias,
+                                renderTemplateModificarCampanias, renderTemplateEliminarCampanias,
+                                renderTemplateCrearCampaniasOK, renderTemplateModificarCampaniasOK,
+                                renderTemplateEliminarCampaniaOK)
 urlpatterns = [
     # Agrupación path admin 
     path('admin/', admin.site.urls),
@@ -45,5 +48,11 @@ urlpatterns = [
     # Agrupación path redirección aside influencers
     path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
     path("informes/", renderTemplateInformes, name='informes'),
-   
+   # Agrupación path redirección campañias
+   path("campanias/crear/", renderTemplateCrearCampanias, name='crearCampanias'),
+   path("campanias/modificar/", renderTemplateModificarCampanias, name='modificarCampanias'),
+   path("campanias/eliminar/", renderTemplateEliminarCampanias, name='eliminarCampanias'),
+   path("campanias/crearOK/", renderTemplateCrearCampaniasOK, name='crearCampaniasOK'),
+   path("campanias/modificarOK/", renderTemplateModificarCampaniasOK, name='modificarCampaniasOK'),
+   path("campanias/EliminarOK/", renderTemplateEliminarCampaniaOK, name='eliminarCampaniasOK'),
 ]

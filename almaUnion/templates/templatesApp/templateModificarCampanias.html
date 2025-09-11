@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modificar campanias</title>
+  </head>
+  <body>
+    <form action="{% url 'modificarCampaniasOK' %}" method="post">
+      {% csrf_token %}
+      <label for="nombre">Nombre de la campaña</label>
+      <input type="text" placeholder="Ej:'ShakaFest'" value="{{ campanias.nombre }}" />
+      <label for="descripcion">Descripcion</label>
+      <input type="text" placeholder="Todos los caballeros de oro en un solo lugar" value="{{campanias.descripcion}}"/>
+      <label for="presupuesto">Presupuesto</label>
+      <input type="number" placeholder="10.000.000" value="{{campanias.presupuesto}}"/>
+      <label for="fechaInicio">Fecha de inicio</label>
+      <input type="date" id="FechaInicio" value="{{ campanias.fechaInicio|date:'Y-m-d' }}" />
+      <label for="fechaFin" >Fecha de fin</label>
+      <input id="fechaFin" name="fechaFin" type="date" value="{{ campanias.fechaFin|date:'Y-m-d' }}" />
+      <button type="submit">Actualizar Campaña</button>
+    </form>
+    <a href="{% url 'campanias' %}">
+      <span>Volver</span>
+    </a>
+  </body>
+</html>

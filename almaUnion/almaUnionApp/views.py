@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from datetime import datetime
 
 # Create your views here.
 def renderTemplateMenuInicial(request):
@@ -61,10 +62,43 @@ def renderTemplateInfluencers(request):
     return render(request, "templatesApp/templateInfluencers.html")
 
 def renderTemplateCampanias(request):
-    return render(request, "templatesApp/templateCampanias.html")
+    campanias=[{"nombre" : "Viltrum puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11"),"fechaFin":datetime.fromisoformat("2026-09-12")}]
+    return render(request, "templatesApp/templateCampanias.html", {"campanias": campanias})
 
 def renderTemplateMensajes(request):
     return render(request, "templatesApp/templateMensajes.html")
 
 def renderTemplatePagos(request):
     return render(request, "templatesApp/templatePagos.html")
+
+# render para campanias
+def renderTemplatex(request):
+    return render(request, "templatesApp/templatex.html")
+
+def renderTemplateCrearCampanias(request):
+    return render(request, "templatesApp/templateCrearCampania.html")
+
+def renderTemplateModificarCampanias(request):
+    campanias = {"nombre" : "Viltrum puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11"),"fechaFin":datetime.fromisoformat("2026-10-12")}
+    return render(request, "templatesApp/templateModificarCampanias.html", {"campanias": campanias})
+
+def renderTemplateEliminarCampanias(request):
+    campania = {"nombre" : "El tunas puede"}
+    return render(request, "templatesApp/templateEliminarCampania.html", {"campania":campania})
+
+def renderTemplateCrearCampaniasOK(request):
+    campanias=[
+        {"nombre" : "Viltrum puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11").isoformat(),"fechaFin":datetime.fromisoformat("2026-09-12").isoformat()}, 
+        {"nombre" : "Jugar 2XOK(El TUKO)", "presupuesto": 8000000, "descripcion": "Te toca hacer 3 electrics al hilo con VI", "fechaInicio": datetime.fromisoformat("2026-10-11"),"fechaFin":datetime.fromisoformat("2026-10-12")},
+               ]
+    return render(request, "templatesApp/templateCrearCampaniaOK.html", {"campanias": campanias})
+
+def renderTemplateModificarCampaniasOK(request):
+    campanias = {"nombre" : "El tunas puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11"),"fechaFin":datetime.fromisoformat("2026-10-12")}
+    return render(request, "templatesApp/templateModificarCampaniasOK.html", {"campanias": campanias})
+
+def renderTemplateEliminarCampaniaOK(request):
+    return render(request, "templatesApp/templateEliminarCampaniaOK.html")
+
+
+
