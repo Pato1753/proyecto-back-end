@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear colaboración</title>
+</head>
+<body>
+  <h1>Crear colaboración</h1>
+
+  <form method="post" action="{% url 'crearColaboracionOK' %}">
+    {% csrf_token %}
+
+    <label for="influencer">Influencer</label>
+    <select name="influencer" id="influencer" required>
+      {% for influencer in influencers %}
+        <option value="{{ influencer.nombreOpcion }}">{{ influencer.opcionNombre }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="campania">Campaña</label>
+    <select name="campania" id="campania" required>
+      {% for campania in campanias %}
+        <option value="{{ campania.nombreCampania }}">{{ campania.opcionCampania }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="status">Status</label>
+    <select name="status" id="status" required>
+      {% for statu in status %}
+        <option value="{{ statu.nombreStatus }}">{{ statu.opcionStatus }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="presupuestoAcordado">Presupuesto acordado</label>
+    <input type="number" id="presupuestoAcordado" name="presupuestoAcordado"
+           min="0" step="1" placeholder="1000000" required />
+
+    <label for="diaAsignado">Día asignado</label>
+    <input type="date" id="diaAsignado" name="diaAsignado" required />
+
+    <button type="submit">Guardar</button>
+  </form>
+
+  <a href="{% url 'colaboracion' %}">Volver</a>
+</body>
+</html>

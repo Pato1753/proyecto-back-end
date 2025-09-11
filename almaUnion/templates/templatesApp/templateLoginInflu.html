@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InfluencerConnect — Iniciar Sesión</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">AlmaUnion</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Inicia Sesión</h1>
+
+      <form class="form" method="post" novalidate>
+        {% csrf_token %}
+        <div class="grid one">
+          <div class="field">
+            <label for="correo">Usuario</label>
+            <input id="correo" name="correo" type="text" placeholder="empresa1 o influencer" required />
+          </div>
+        </div>
+
+        <div class="grid one">
+          <div class="field">
+            <label for="password">Contraseña</label>
+            <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" required />
+          </div>
+        </div>
+
+        {% if error %}
+          <p style="color:red;">{{ error }}</p>
+        {% endif %}
+
+        <button class="btn-primary" type="submit">Entrar</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

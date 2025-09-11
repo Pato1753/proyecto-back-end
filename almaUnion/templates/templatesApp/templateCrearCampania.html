@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Campania</title>
+</head>
+<body>
+    <form action="{% url 'crearCampaniasOK' %}" method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre de la campaña</label>
+        <input type="text" placeholder="Ej:'ShakaFest'">
+        <label for="descripcion" >Descripcion</label>
+        <input type="text" placeholder="Todos los caballeros de oro en un solo lugar">
+        <label for="presupuesto">Presupuesto</label>
+        <input type="number" placeholder="10.000.000">
+        <label for="fechaInicio">Fecha de inicio</label>
+        <input type="date">
+        <label for="fechaFinal">Fecha de fin</label>
+        <input type="date">
+        <button type="submit">Crear Campaña</button>
+    </form>
+    <a href="{% url 'campanias' %}">
+        <span>Volver</span>
+    </a>
+</body>
+</html>

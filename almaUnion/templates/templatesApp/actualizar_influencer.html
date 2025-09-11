@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Datos Influencer</title>
+    <link rel="stylesheet" href="{% static 'css/actualizar_influencer.css' %}">
+</head>
+<body>
+    <h1>Actualizar Datos</h1>
+
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ user.nombre }}" required><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ user.email }}" required><br><br>
+
+        <label>Red Social:</label>
+        <input type="text" name="red_social" value="{{ user.red_social }}"><br><br>
+
+        <label>Seguidores:</label>
+        <input type="number" name="seguidores" value="{{ user.seguidores }}"><br><br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colaboraciones</title>
+</head>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    h1, td, th {
+      color: white;
+    }
+  </style>
+<body>
+
+    <div>
+        <h1>Colaboraciones</h1>
+        <a class= href="{% url 'crearColaboracion' %}">
+            <img
+            src="{% static 'assets/agregar.png' %}"
+            alt="agregarCampaniaLogo"
+            />
+            <span class=>Nueva colaboracion</span>
+        </a>
+    </div>
+  <div class="wrap">
+    <div class="toolbar">
+      <h1>Colaboraciones</h1>
+      <a class="btn" href="{% url 'crearColaboracion' %}">
+        <img src="{% static 'assets/agregar.png' %}" alt="agregarCampaniaLogo" height="20"/>
+        <span>Nueva colaboración</span>
+      </a>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="campania">Campaña</label><br>
+        <select name="campanias" id="campania">
+          {% for campania in campanias %}
+            <option value="{{ campania.nombreOpcion }}">{{ campania.opcionNombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="influencer">Influencer</label><br>
+        <select name="influencer" id="influencer">
+          {% for influencer in influencers %}
+            <option value="{{ influencer.nombreOpcion }}">{{ influencer.opcionNombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="status">Status</label><br>
+        <select name="status" id="status">
+          {% for statu in status %}
+            <option value="{{ statu.nombreStatus }}">{{ statu.opcionEstatus }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="dia">Día</label><br>
+        <select name="dia" id="dia">
+          {% for dia in dias %}
+            <!-- asumiendo que opcionNombre es datetime -->
+            <option value="{{ dia.opcionNombre|date:'Y-m-d' }}">{{ dia.opcionNombre|date:'Y-m-d' }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Influencer</th>
+          <th>Campaña</th>
+          <th>Status</th>
+          <th>Pago Acordado</th>
+          <th>Día asignado</th>
+          <th>acción</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for colaboracion in colaboraciones %}
+        <tr>
+          <td>{{ colaboracion.influencer }}</td>
+          <td>{{ colaboracion.campania }}</td>
+          <td>{{ colaboracion.status }}</td>
+          <td>{{ colaboracion.pagoAcordado }}</td>
+          <td>{{ colaboracion.diaAsignado|date:"Y-m-d" }}</td>
+          <td>
+            <a href="{% url 'modificarColaboracion' %}"
+              ><img src="{% static 'assets/lapiz.png' %} " alt="ediciónLogo"
+            /></a>
+          </td>
+          <td>
+            <a href="{% url 'eliminarColaboracion' %}"
+              ><img src="{% static 'assets/basurero.png' %}"
+              alt="eliminarLogo"></a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+</body>
+</html>
