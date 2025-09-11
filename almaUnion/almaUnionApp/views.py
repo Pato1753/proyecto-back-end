@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
 
 # Lista/diccionario de usuarios permitidos
 # formato: usuario: (contraseña, rol)
@@ -7,7 +8,39 @@ USERS = {
     'empresa1': ('1234', 'EMPRESA'),
     'influencer': ('1234', 'INFLUENCER'),
 }
+INFLUENCER = {
+    "influencer": {
+        "password": "1234",
+        "nombre": "Juan Pérez",
+        "email": "juan@example.com",
+        "red_social": "Instagram",
+        "seguidores": 5000,
+    }
+}
 
+def actualizar_influencer(request):
+    username = "influencer"  # Aquí deberías sacar el usuario logueado de la sesión
+
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        email = request.POST.get("email")
+        red_social = request.POST.get("red_social")
+        seguidores = request.POST.get("seguidores")
+
+        # Guardamos cambios en USERS
+        INFLUENCER[username]["nombre"] = nombre
+        INFLUENCER[username]["email"] = email
+        INFLUENCER[username]["red_social"] = red_social
+        INFLUENCER[username]["seguidores"] = seguidores
+
+        print("Usuario actualizado: ",INFLUENCER[username])
+
+        messages.success(request, "¡Datos actualizados correctamente!")
+        return redirect("actualizar_influencer")
+
+    return render(request, "templatesApp/actualizar_influencer.html", {
+        "user": INFLUENCER[username]
+    })
 def renderTemplateMenuInicial(request):
     return render(request, "templatesApp/templateMenuInicial.html")
 

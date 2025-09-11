@@ -30,3 +30,7 @@ Escritor: Marcelo Ramos
 Miercoles 10 de Septiembre:
 -Se actualiza el registro de usuario
 -Se añade template de login con su respectivo diseño
+
+jueves 11 de Septiembre:
+se añade templates de usuario y de empresa
+se crea el editar influencer para que el influencer pueda editar informacion personal

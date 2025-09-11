@@ -1,13 +1,119 @@
-{% extends "templatesApp/templateBaseHub.html" %}
+{% load static %}
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sophia Bennett</title>
+    <link rel="stylesheet" href="{% static 'css/hubinfluencer.css' %}">
+</head>
+<body>
+    <!-- Panel lateral -->
+    <aside class="sidebar">
+        <div class="profile">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophia Bennett" class="profile-img">
+            <h2>Sophia Bennett</h2>
+            <p>Influencer</p>
+        </div>
+        
+        <ul class="menu">
+            <li><a href="#" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#"><i class="fas fa-bullhorn"></i> Campañas</a></li>
+            <li><a href="#"><i class="fas fa-money-bill-wave"></i> Pagos</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Notificaciones</a></li>
+            <li><a href="{% url 'actualizar_influencer'%}"><i class="fas fa-user-edit"></i> Edita Perfil</a></li>
+        </ul>
+    </aside>
 
-{% block extraCss %}
-<!-- Para agregar otro archivo de Css aparte del base y del componente -->
-    {% comment %} <link rel="stylesheet" href="{% static 'css/ejemplo.css' %}"> {% endcomment %}
-{% endblock extraCss %}
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <h1>Bienvenida, Sophia</h1>
+            <p>Selecciona una opción del menú para empezar. Aquí puedes gestionar tus campañas, revisar tus pagos y actualizar tu perfil.</p>
+        </section>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon icon-1">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>24.5K</h3>
+                    <p>Impresiones</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon icon-2">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>3.8K</h3>
+                    <p>Engagements</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon icon-3">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>12</h3>
+                    <p>Campañas Activas</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon icon-4">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>$3,240</h3>
+                    <p>Ganancias</p>
+                </div>
+            </div>
+        </div>
+        
+        <section class="recent-activities">
+            <h2 class="section-title">Actividad Reciente</h2>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Campaña completada</h4>
+                        <p>Has completado la campaña "Summer Style 2023"</p>
+                    </div>
+                    <div class="activity-time">Hace 2 horas</div>
+                </li>
+                
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Pago recibido</h4>
+                        <p>Se ha procesado tu pago de $850 por la campaña de Nike</p>
+                    </div>
+                    <div class="activity-time">Ayer</div>
+                </li>
+                
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Nueva notificación</h4>
+                        <p>Tienes una nueva propuesta de colaboración de Adidas</p>
+                    </div>
+                    <div class="activity-time">Hace 3 días</div>
+                </li>
+            </ul>
+        </section>
+    </main>
 
-{% block title %} HubInfluencer {% endblock title %}
-
-{% block main %}
-
-{% endblock main %}
+    <script src="script.js"></script>
+</body>
+</html>
