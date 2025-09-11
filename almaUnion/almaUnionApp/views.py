@@ -1,33 +1,33 @@
 from django.shortcuts import render
 from datetime import datetime
+from django.views.decorators.csrf import csrf_protect
 
-# Create your views here.
+
 def renderTemplateMenuInicial(request):
     return render(request, "templatesApp/templateMenuInicial.html")
 
 def renderTemplateRegistroEmpresa(request):
     return render(request, "templatesApp/templateRegistroEmpresa.html")
 
+@csrf_protect
 def renderTemplateRegistroInfluencer(request):
     return render(request, "templatesApp/templateRegistroInfluencer.html")
 
 def renderTemplateHubEmpresa(request):
-    # Para cambiar el nombre de la empresa
     infoPerfil = {"fotoPerfil": "assets/avatarEmpresa.png", "nombrePerfil": "Patricio Patoso"}
     botones = [
         {"label": "Inicio", "viewName": "inicio", "sourceImagen":"assets/casa.png", "sourceAlternative": "inicioLogo"},
-        {"label": "Influencers", "viewName": "influencers", "sourceImagen":"assets/users.png", "sourceAlternative": "influencersLogo" },
-        {"label": "Campañas", "viewName": "campanias", "sourceImagen":"assets/metricas.png", "sourceAlternative": "campañaLogo" },
-        {"label": "Perfil", "viewName": "perfil", "sourceImagen":"assets/user.png", "sourceAlternative": "userLogo" },
-        {"label": "Mensajes", "viewName": "mensajes", "sourceImagen":"assets/burbuja.png", "sourceAlternative": "mensajeLogo" },
-        {"label": "Pagos", "viewName": "pagos", "sourceImagen":"assets/tarjetaDeBanco.png", "sourceAlternative": "pagosLogo" },
-        {"label": "Configuración", "viewName": "configuracion", "sourceImagen":"assets/ajustes.png", "sourceAlternative": "configuraciónLogo" },
+        {"label": "Influencers", "viewName": "influencers", "sourceImagen":"assets/users.png", "sourceAlternative": "influencersLogo"},
+        {"label": "Campañas", "viewName": "campanias", "sourceImagen":"assets/metricas.png", "sourceAlternative": "campañaLogo"},
+        {"label": "Perfil", "viewName": "perfil", "sourceImagen":"assets/user.png", "sourceAlternative": "userLogo"},
+        {"label": "Mensajes", "viewName": "mensajes", "sourceImagen":"assets/burbuja.png", "sourceAlternative": "mensajeLogo"},
+        {"label": "Pagos", "viewName": "pagos", "sourceImagen":"assets/tarjetaDeBanco.png", "sourceAlternative": "pagosLogo"},
+        {"label": "Configuración", "viewName": "configuracion", "sourceImagen":"assets/ajustes.png", "sourceAlternative": "configuraciónLogo"},
     ]
     return render(request, "templatesApp/templateHubEmpresa.html", {"botones" : botones, "infoPerfil": infoPerfil})
-  
-def renderTemplateHubInfluencer(request):    
+
+def renderTemplateHubInfluencer(request):
     infoPerfil = {"fotoPerfil": "assets/avatarInfluencer.png", "nombrePerfil": "Rubí Rubíes"}
-    
     botones = [
         {"label": "Inicio", "viewName": "inicio", "sourceImagen": "assets/casa.png", "sourceAlternative": "inicioLogo"},
         {"label": "Oportunidades", "viewName": "oportunidades", "sourceImagen": "assets/maleta.png", "sourceAlternative": "oportunidadesLogo"},
@@ -39,9 +39,7 @@ def renderTemplateHubInfluencer(request):
         "botones": botones,
         "infoPerfil": infoPerfil
     }
-    
     return render(request, "templatesApp/templateHubInfluencer.html", contexto)
-
 
 # Render en común influencer-Empresa
 def renderTemplateConfiguracion(request):
@@ -50,7 +48,25 @@ def renderTemplateConfiguracion(request):
 def renderTemplatePerfil(request):
     return render(request, "templatesApp/templatePerfil.html")
 
-# Render para influencer
+# Render del login con validación
+def renderTemplatesLogin(request):
+    error = None
+    if request.method == "POST":
+        username = request.POST.get("correo")
+        password = request.POST.get("password")
+
+        if username in USERS and USERS[username][0] == password:
+            rol = USERS[username][1]
+
+            if rol == "EMPRESA":
+                return redirect("hubEmpresa")  # <-- nombre de la url del hub empresa
+            elif rol == "INFLUENCER":
+                return redirect("hubInfluencer")  # <-- nombre de la url del hub influencer
+        else:
+            error = "Usuario o contraseña incorrectos"
+
+    return render(request, "templatesApp/templateLoginInflu.html", {"error": error})
+
 def renderTemplateOportunidades(request):
     return render(request, "templatesApp/templateOportunidades.html")
 

@@ -28,6 +28,7 @@
       <h2>Regístrate como Empresa</h2>
       <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
       <form method='post' action="{% url 'hubEmpresa' %}">
+      <form method='post' action="{% url 'Login' %}"> 
         {% csrf_token %}
         <input type="text" placeholder="Nombre de la empresa" required>
         <input type="text" placeholder="RUT de la empresa" required>

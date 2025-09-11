@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistroEmpresa,
-                                renderTemplateRegistroInfluencer, renderTemplateHubEmpresa,
+                                renderTemplateRegistroInfluencer,renderTemplatesLogin , renderTemplateHubEmpresa,
                                 renderTemplateHubInfluencer, renderTemplateCampanias,
                                 renderTemplateConfiguracion, renderTemplateInfluencers,
                                 renderTemplateInformes, renderTemplateMensajes,
@@ -34,6 +34,7 @@ urlpatterns = [
     # Agrupación path Registro de usuario
     path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
     path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
+    path("Login-Influencer/", renderTemplatesLogin, name='Login'),
     # Agrupación path redirección al Hub
     path("hubEmpresa/", renderTemplateHubEmpresa, name='hubEmpresa'),
     path("hubInfluencer/", renderTemplateHubInfluencer, name='hubInfluencer'),

@@ -34,3 +34,6 @@ Jueves 11 de Septiembre
 - Se agregaron assets nuevos
 
 X Falta  agregar estilos
+Miercoles 10 de Septiembre:
+-Se actualiza el registro de usuario
+-Se añade template de login con su respectivo diseño
