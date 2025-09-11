@@ -1,0 +1,19 @@
+
+
+.hubAsideButton img {
+    width: 30px;
+}
+
+.hubAsideButton a {
+    background-color: black;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    /* Transition, consiste en la propiedad a cambiar(El fondo en este caso), la duración(1 segundo) y su efecto(empieza rapido y termina suave) */
+    transition: background-color 1s ease;
+}
+
+.hubAsideButton:hover{
+background-color: red;
+}

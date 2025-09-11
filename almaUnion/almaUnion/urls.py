@@ -16,9 +16,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from almaUnionApp.views import renderMenuInicial, renderRegEmpresa
+from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistroEmpresa,
+                                renderTemplateRegistroInfluencer,renderTemplatesLogin , renderTemplateHubEmpresa,
+                                renderTemplateHubInfluencer, renderTemplateCampanias,
+                                renderTemplateConfiguracion, renderTemplateInfluencers,
+                                renderTemplateInformes, renderTemplateMensajes,
+                                renderTemplatePagos, renderTemplateOportunidades,
+                                renderTemplatePerfil)
 urlpatterns = [
+    # Agrupación path admin 
     path('admin/', admin.site.urls),
-    path("inicio/",renderMenuInicial),
-    path("registro-empresa/",renderRegEmpresa)
+    # Agrupación path Menu inicial
+    path("", renderTemplateMenuInicial, name='inicio'),
+    # Agrupación path Registro de empresa
+    path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
+    # Agrupación path Registro de usuario
+    path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
+    path("Login-Influencer/", renderTemplatesLogin, name='Login'),
+    # Agrupación path redirección al Hub
+    path("hubEmpresa/", renderTemplateHubEmpresa, name='hubEmpresa'),
+    path("hubInfluencer/", renderTemplateHubInfluencer, name='hubInfluencer'),
+    # agrupación path redirección aside común influencer-Empresa
+    path("perfil/", renderTemplatePerfil, name='perfil'), 
+    path("configuracion/", renderTemplateConfiguracion, name='configuracion'),
+    # Agrupación path redirección aside Empresa
+    path("influencers/", renderTemplateInfluencers, name='influencers' ),
+    path("campanias/", renderTemplateCampanias, name='campanias'),
+    path("mensajes/", renderTemplateMensajes, name='mensajes'),
+    path("pagos/", renderTemplatePagos, name='pagos'),
+    # Agrupación path redirección aside influencers
+    path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
+    path("informes/", renderTemplateInformes, name='informes'),
 ]

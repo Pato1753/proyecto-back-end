@@ -1,0 +1,8 @@
+{% load static %}
+<a class="hubAsideButton" href="{% url viewName %}">
+  <img class="hubAsideButton"
+       src="{% static sourceImagen %}"  {# si te pasan rutas estáticas como "assets/casa.png" #}
+       alt="{{ sourceAlternative }}">
+  <span class="hubAsideButton">{{ label }}</span>
+</a>
+
