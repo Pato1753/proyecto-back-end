@@ -39,7 +39,7 @@
     <table>
       <thead>
         <tr>
-          <th>Nombre de campaña</th>
+          <th >Nombre de campaña</th>
           <th>Descripcion</th>
           <th>Fecha de inicio</th>
           <th>Fecha de fin</th>
@@ -51,11 +51,11 @@
       <tbody>
         {% for campania in campanias %}
         <tr>
-          <td>{{ campania.nombre }}</td>
-          <td>{{ campania.descripcion }}</td>
-          <td>{{ campania.fechaInicio|date:"Y-m-d" }}</td>
-          <td>{{ campania.fechaFin|date:"Y-m-d" }}</td>
-          <td>{{ campania.presupuesto }}</td>
+          <th >{{ campania.nombre }}</th>
+          <th>{{ campania.descripcion }}</th>
+          <th>{{ campania.fechaInicio|date:"Y-m-d" }}</th>
+          <th>{{ campania.fechaFin|date:"Y-m-d" }}</th>
+          <th>{{ campania.presupuesto }}</th>
           <td>
             <a href="{% url 'modificarCampanias' %}"
               ><img src="{% static 'assets/lapiz.png' %} " alt="ediciónLogo"
@@ -63,7 +63,7 @@
           </td>
           <td>
             <a href="{% url 'eliminarCampanias' %}"
-              ><img src="{% static 'assets/basurero.png' %}"
+              ><img src="{% static "assets/basurero.png" %}"
               alt="eliminarLogo"></a
             >
           </td>

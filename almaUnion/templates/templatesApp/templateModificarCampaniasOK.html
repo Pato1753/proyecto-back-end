@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        th {
+        th, td {
             color: white;
         }
     </style>
@@ -49,13 +49,12 @@
         </tr>
       </thead>
       <tbody>
-        {% for campania in campanias %}
         <tr>
-          <td>{{ campania.nombre }}</td>
-          <td>{{ campania.descripcion }}</td>
-          <td>{{ campania.fechaInicio|date:"Y-m-d" }}</td>
-          <td>{{ campania.fechaFin|date:"Y-m-d" }}</td>
-          <td>{{ campania.presupuesto }}</td>
+          <td>{{ campanias.nombre }}</td>
+          <td>{{ campanias.descripcion }}</td>
+          <td>{{ campanias.fechaInicio|date:"Y-m-d" }}</td>
+          <td>{{ campanias.fechaFin|date:"Y-m-d" }}</td>
+          <td>{{ campanias.presupuesto }}</td>
           <td>
             <a href="{% url 'modificarCampanias' %}"
               ><img src="{% static 'assets/lapiz.png' %} " alt="ediciónLogo"
@@ -68,7 +67,6 @@
             >
           </td>
         </tr>
-        {% endfor %}
       </tbody>
     </table>
   </body>
