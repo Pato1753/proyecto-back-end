@@ -17,12 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistroEmpresa,
-                                renderTemplateRegistroInfluencer,renderTemplatesLogin , renderTemplateHubEmpresa,
-                                renderTemplateHubInfluencer, renderTemplateCampanias,
-                                renderTemplateConfiguracion, renderTemplateInfluencers,
-                                renderTemplateInformes, renderTemplateMensajes,
-                                renderTemplatePagos, renderTemplateOportunidades,
-                                renderTemplatePerfil, actualizar_influencer)
+                                renderTemplateRegistroInfluencer,renderTemplatesLogin ,
+                                renderTemplateHubEmpresa,renderTemplateHubInfluencer,
+                                renderTemplateCampanias,renderTemplateConfiguracion,
+                                renderTemplateInfluencers, renderTemplateInformes,
+                                renderTemplateMensajes,renderTemplatePagos,
+                                renderTemplateOportunidades,renderTemplatePerfil,
+                                actualizar_influencer, renderTemplateColaboracion,
+                                renderTemplateColaboracionCrear,renderTemplateColaboracionCrearOK,
+                                renderTemplateModificarColaboracion, renderTemplateModificarColaboracionOK,
+                                renderTemplateEliminarColaboracion, renderTemplateEliminarColaboracionOK,
+                                renderTemplatePerfil, renderTemplateCrearCampanias,
+                                renderTemplateModificarCampanias, renderTemplateEliminarCampanias,
+                                renderTemplateCrearCampaniasOK, renderTemplateModificarCampaniasOK,
+                                renderTemplateEliminarCampaniaOK
+                                )
 urlpatterns = [
     # Agrupación path admin 
     path('admin/', admin.site.urls),
@@ -32,8 +41,7 @@ urlpatterns = [
     path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
     path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
     path("Login-Influencer/", renderTemplatesLogin, name='Login'),
-
-        path("influencer/editar/", actualizar_influencer, name="actualizar_influencer"),
+    path("influencer/editar/", actualizar_influencer, name="actualizar_influencer"),
     # Agrupación path redirección al Hub
     path("hubEmpresa/", renderTemplateHubEmpresa, name='hubEmpresa'),
     path("hubInfluencer/", renderTemplateHubInfluencer, name='hubInfluencer'),
@@ -46,6 +54,20 @@ urlpatterns = [
     path("mensajes/", renderTemplateMensajes, name='mensajes'),
     path("pagos/", renderTemplatePagos, name='pagos'),
     # Agrupación path redirección aside influencers
-    path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
-    path("informes/", renderTemplateInformes, name='informes'),
+    path("colaboraciones/", renderTemplateColaboracion, name="colaboracion"),
+    path("colaboraciones/crear/", renderTemplateColaboracionCrear, name="crearColaboracion"),
+    path("colaboraciones/modificar/", renderTemplateModificarColaboracion, name='modificarColaboracion'),
+    path("colaboraciones/eliminar/", renderTemplateEliminarColaboracion, name='eliminarColaboracion'),
+    path("colaboraciones/crearOK/", renderTemplateColaboracionCrearOK, name="crearColaboracionOK"),
+    path("colaboraciones/modificarOK/", renderTemplateModificarColaboracionOK, name="modificarColaboracionOK"),
+    path("colaboraciones/eliminarOK/", renderTemplateEliminarColaboracionOK, name="eliminarColaboracionOK<"),
+    # Agrupación path redirección campañias
+   path("campanias/crear/", renderTemplateCrearCampanias, name='crearCampanias'),
+   path("campanias/modificar/", renderTemplateModificarCampanias, name='modificarCampanias'),
+   path("campanias/eliminar/", renderTemplateEliminarCampanias, name='eliminarCampanias'),
+   path("campanias/crearOK/", renderTemplateCrearCampaniasOK, name='crearCampaniasOK'),
+   path("campanias/modificarOK/", renderTemplateModificarCampaniasOK, name='modificarCampaniasOK'),
+   path("campanias/EliminarOK/", renderTemplateEliminarCampaniaOK, name='eliminarCampaniasOK'),
+   path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
+   path("informes/", renderTemplateInformes, name='informes'),
 ]
