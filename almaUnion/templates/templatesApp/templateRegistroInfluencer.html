@@ -21,7 +21,8 @@
     <section class="card">
       <h1>Regístrate como Influencer</h1>
 
-      <form class="form" action="#" method="post" novalidate>
+      <form action="{% url 'Login' %}" class="form" method="POST" novalidate>
+        {% csrf_token %}
         <div class="grid two">
           <div class="field">
             <label for="nombre">Nombre</label>
@@ -102,7 +103,7 @@
           </div>
         </div>
 
-        <a href="{% url 'Login' %}"><button class="btn-primary" type="submit">Crear Cuenta</button></a>
+        <button class="btn-primary" type="submit">Crear Cuenta</button>
       </form>
     </section>
   </main>
