@@ -28,8 +28,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Agrupación path Menu inicial
     path("", renderTemplateMenuInicial, name='inicio'),
-    # Agrupación path Registro de usuario
+    # Agrupación path Registro de empresa
     path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
+    # Agrupación path Registro de usuario
     path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
     path("Login-Influencer/", renderTemplatesLogin, name='Login'),
     # Agrupación path redirección al Hub

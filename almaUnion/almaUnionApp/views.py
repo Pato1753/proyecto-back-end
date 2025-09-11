@@ -5,24 +5,12 @@ def renderTemplateMenuInicial(request):
     return render(request, "templatesApp/templateMenuInicial.html")
 
 def renderTemplateRegistroEmpresa(request):
-    return render(request, "templatesApp/templateRegistroEmpresa.html")
+    return render(request, "templatesApp/empresa/templateRegistroEmpresa.html")
 
 def renderTemplateRegistroInfluencer(request):
     return render(request, "templatesApp/templateRegistroInfluencer.html")
 
-def renderTemplateHubEmpresa(request):
-    # Para cambiar el nombre de la empresa
-    infoPerfil = {"fotoPerfil": "assets/avatarEmpresa.png", "nombrePerfil": "Patricio Patoso"}
-    botones = [
-        {"label": "Inicio", "viewName": "inicio", "sourceImagen":"assets/casa.png", "sourceAlternative": "inicioLogo"},
-        {"label": "Influencers", "viewName": "influencers", "sourceImagen":"assets/users.png", "sourceAlternative": "influencersLogo" },
-        {"label": "Campañas", "viewName": "campanias", "sourceImagen":"assets/metricas.png", "sourceAlternative": "campañaLogo" },
-        {"label": "Perfil", "viewName": "perfil", "sourceImagen":"assets/user.png", "sourceAlternative": "userLogo" },
-        {"label": "Mensajes", "viewName": "mensajes", "sourceImagen":"assets/burbuja.png", "sourceAlternative": "mensajeLogo" },
-        {"label": "Pagos", "viewName": "pagos", "sourceImagen":"assets/tarjetaDeBanco.png", "sourceAlternative": "pagosLogo" },
-        {"label": "Configuración", "viewName": "configuracion", "sourceImagen":"assets/ajustes.png", "sourceAlternative": "configuraciónLogo" },
-    ]
-    return render(request, "templatesApp/templateHubEmpresa.html", {"botones" : botones, "infoPerfil": infoPerfil})
+
   
 def renderTemplateHubInfluencer(request):    
     infoPerfil = {"fotoPerfil": "assets/avatarInfluencer.png", "nombrePerfil": "Rubí Rubíes"}
@@ -62,6 +50,20 @@ def renderTemplateInformes(request):
 # Render para Empresa
 def renderTemplateInfluencers(request):
     return render(request, "templatesApp/templateInfluencers.html")
+
+def renderTemplateHubEmpresa(request):
+    # Para cambiar el nombre de la empresa
+    infoPerfil = {"fotoPerfil": "assets/avatarEmpresa.png", "nombrePerfil": "Patricio Patoso"}
+    botones = [
+        {"label": "Inicio", "viewName": "inicio", "sourceImagen":"assets/casa.png", "sourceAlternative": "inicioLogo"},
+        {"label": "Influencers", "viewName": "influencers", "sourceImagen":"assets/users.png", "sourceAlternative": "influencersLogo" },
+        {"label": "Campañas", "viewName": "campanias", "sourceImagen":"assets/metricas.png", "sourceAlternative": "campañaLogo" },
+        {"label": "Perfil", "viewName": "perfil", "sourceImagen":"assets/user.png", "sourceAlternative": "userLogo" },
+        {"label": "Mensajes", "viewName": "mensajes", "sourceImagen":"assets/burbuja.png", "sourceAlternative": "mensajeLogo" },
+        {"label": "Pagos", "viewName": "pagos", "sourceImagen":"assets/tarjetaDeBanco.png", "sourceAlternative": "pagosLogo" },
+        {"label": "Configuración", "viewName": "configuracion", "sourceImagen":"assets/ajustes.png", "sourceAlternative": "configuraciónLogo" },
+    ]
+    return render(request, "templatesApp/empresa/templateHubEmpresa.html", {"botones" : botones, "infoPerfil": infoPerfil})
 
 def renderTemplateCampanias(request):
     return render(request, "templatesApp/templateCampanias.html")

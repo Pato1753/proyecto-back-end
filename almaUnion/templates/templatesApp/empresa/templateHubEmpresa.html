@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Empresa - AlmaUnion</title>
+  <link rel="stylesheet" href="{% static 'css/hubempresa.css' %}?v=1">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">AlmaUnion</h1>
+    <input type="text" class="search" placeholder="Buscar influencers por audiencia, categoría...">
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Planes</a>
+      <a href="#">Propuestas</a>
+      <a href="#">Favoritos</a>
+      <a href="#" class="btn-profile">Mi Perfil</a>
+      <a href="#" class="btn-logout">Salir</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard">
+    <!-- Columna izquierda -->
+    <section class="left">
+      <div class="card company">
+        <div class="logo-circle">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Logo Empresa">
+        </div>
+        <h3>Nombre de la Empresa</h3>
+        <p class="category">Tecnología</p>
+        <p class="description">Descripción breve de la empresa. Misión, visión y valores. Esto ayuda a los influencers a conocerte.</p>
+        <button class="btn-red">Personalizar Perfil</button>
+      </div>
+
+      <div class="card">
+        <h3>Redes Sociales</h3>
+        <ul>
+          <li><a href="#">LinkedIn - 50k seguidores</a></li>
+          <li><a href="#">Twitter - 25k seguidores</a></li>
+        </ul>
+        <button class="btn-gray">Agregar</button>
+      </div>
+
+      <div class="card">
+        <h3>Videos</h3>
+        <div class="video-item">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Video 1">
+          <div>
+            <p>Colaboración @influencer1</p>
+            <small>1.2M visitas - 15/05/24</small>
+          </div>
+        </div>
+        <div class="video-item">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Video 2">
+          <div>
+            <p>Lanzamiento Producto X</p>
+            <small>800k visitas - 01/04/24</small>
+          </div>
+        </div>
+        <button class="btn-gray">Agregar</button>
+      </div>
+    </section>
+
+    <!-- Columna derecha -->
+    <section class="right">
+      <div class="card services">
+        <h3>Gestión de Servicios</h3>
+        <div class="services-grid">
+          <div>
+            <p>Plan Actual: <strong>Básico</strong></p>
+            <small>3/5 propuestas usadas</small><br>
+            <button class="btn-red">Gestionar Plan</button>
+          </div>
+          <div>
+            <p>Solicitar Servicio</p>
+            <small>Pide servicios únicos o múltiples.</small><br>
+            <button class="btn-gray">Solicitar</button>
+          </div>
+          <div>
+            <p>Servicios Adicionales</p>
+            <small>Compra extras con precio fijo.</small><br>
+            <button class="btn-gray">Comprar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Explorar Influencers</h3>
+        <div class="influencer">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Influencer Tres">
+          <div>
+            <h4>Influencer Tres</h4>
+            <small>Gaming | 500k audiencia</small>
+          </div>
+          <div class="actions">
+            <button class="btn-gray">Interés</button>
+            <button class="btn-gray">Favorito</button>
+            <button class="btn-red">Proponer</button>
+          </div>
+        </div>
+
+        <div class="counteroffer">
+          <p><strong>Contraoferta de <span class="red">Influencer Tres:</span></strong></p>
+          <blockquote>"Propongo 2 historias y 1 reel por un 15% adicional. ¡Lograremos un gran impacto!"</blockquote>
+          <div class="counter-actions">
+            <button class="btn-green">Aceptar</button>
+            <button class="btn-red">Rechazar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Colaboradores y Calificaciones</h3>
+        <div class="collab">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Influencer Uno">
+          <p>Influencer Uno <span class="stars">⭐⭐⭐⭐☆</span> <small>4.5</small></p>
+          <button class="btn-gray">Ver Perfil</button>
+        </div>
+        <div class="collab">
+          <img src="{% static 'img/influencer.jpg' %}" alt="Influencer Dos">
+          <p>Influencer Dos <span class="stars">⭐⭐⭐⭐⭐</span> <small>5.0</small></p>
+          <button class="btn-gray">Ver Perfil</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
