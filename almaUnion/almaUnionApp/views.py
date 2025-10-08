@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from datetime import datetime
 
 # Lista/diccionario de usuarios permitidos
 # formato: usuario: (contraseña, rol)
@@ -123,3 +124,148 @@ def renderTemplateMensajes(request):
 
 def renderTemplatePagos(request):
     return render(request, "templatesApp/templatePagos.html")
+
+# render para campanias
+def renderTemplatex(request):
+    return render(request, "templatesApp/templatex.html")
+
+def renderTemplateCrearCampanias(request):
+    influencers = [
+        {"nombreOpcion": 1, "opcionNombre": "Steven"},
+        {"nombreOpcion": 2, "opcionNombre": "Lalo"},
+    ]
+    campanias = [
+        {"nombreCampania": 1, "opcionCampania": "Viltrum te necesita"},
+        {"nombreCampania": 2, "opcionCampania": "Lorem Ipsum"},
+    ]
+    status = [
+        {"nombreStatus": 1, "opcionStatus": "Propuesta"},
+        {"nombreStatus": 2, "opcionStatus": "Aceptada"},
+        {"nombreStatus": 3, "opcionStatus": "En curso"},
+        {"nombreStatus": 4, "opcionStatus": "Finalizada"},
+    ]
+    dias = [
+        {"opcionNombre": "2026-09-11"},
+        {"opcionNombre": "2026-10-16"},
+        {"opcionNombre": "2026-09-01"},
+    ]
+
+    context = {
+        "influencers": influencers,
+        "campanias": campanias,
+        "status": status,
+        "dias": dias,
+    }
+    return render(request, "templatesApp/templateColaboracion.html", context)  # ✅ dict
+
+
+def renderTemplateModificarCampanias(request):
+    campanias = {"nombre" : "Viltrum puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11"),"fechaFin":datetime.fromisoformat("2026-10-12")}
+    return render(request, "templatesApp/templateModificarCampanias.html", {"campanias": campanias})
+
+def renderTemplateEliminarCampanias(request):
+    campania = {"nombre" : "El tunas puede"}
+    return render(request, "templatesApp/templateEliminarCampania.html", {"campania":campania})
+
+def renderTemplateCrearCampaniasOK(request):
+    campanias=[
+        {"nombre" : "Viltrum puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11").isoformat(),"fechaFin":datetime.fromisoformat("2026-09-12").isoformat()}, 
+        {"nombre" : "Jugar 2XOK(El TUKO)", "presupuesto": 8000000, "descripcion": "Te toca hacer 3 electrics al hilo con VI", "fechaInicio": datetime.fromisoformat("2026-10-11"),"fechaFin":datetime.fromisoformat("2026-10-12")},
+               ]
+    return render(request, "templatesApp/templateCrearCampaniaOK.html", {"campanias": campanias})
+
+def renderTemplateModificarCampaniasOK(request):
+    campanias = {"nombre" : "El tunas puede","presupuesto": 10000000, "descripcion": "Vamos a ayudar a la tierra y tu serás nuestro mensajero", "fechaInicio": datetime.fromisoformat("2026-09-11"),"fechaFin":datetime.fromisoformat("2026-10-12")}
+    return render(request, "templatesApp/templateModificarCampaniasOK.html", {"campanias": campanias})
+
+def renderTemplateEliminarCampaniaOK(request):
+    return render(request, "templatesApp/templateEliminarCampaniaOK.html")
+
+# render para colaboracion
+def renderTemplateColaboracion(request):
+    influencers = [
+        {"id": 1, "label": "Steven"},
+        {"id": 2, "label": "Lalo"},
+    ]
+    campanias = [
+        {"id": 1, "label": "Viltrum te necesita"},
+        {"id": 2, "label": "Lorem Ipsum"},
+    ]
+    estados = [
+        {"id": 1, "label": "Propuesta"},
+        {"id": 2, "label": "Aceptada"},
+        {"id": 3, "label": "En curso"},
+        {"id": 4, "label": "Finalizada"},
+    ]
+    dias = [
+        {"id": "2026-09-11", "label": datetime.fromisoformat("2026-09-11")},
+        {"id": "2026-10-16", "label": datetime.fromisoformat("2026-10-16")},
+        {"id": "2026-09-01", "label": datetime.fromisoformat("2026-09-01")},
+    ]
+    
+    colaboraciones = [
+        {
+            "influencer": "Steven",
+            "campania": "Viltrum te necesita",
+            "status": "Propuesta",
+            "pagoAcordado": 1000000,
+            "diaAsignado": datetime.fromisoformat("2026-09-11"),
+        }
+    ]
+    
+    contexto = {
+    "influencers": influencers,
+    "campanias": campanias,
+    "status": estados,
+    "dias": dias,
+    "colaboraciones": colaboraciones
+    }   
+    
+    return render(request, "templatesApp/templateColaboracion.html", contexto)
+
+
+
+def renderTemplateColaboracionCrear(request):
+    
+    influencers = [
+        {"nombreOpcion": 1, "opcionNombre": "Steven"},
+        {"nombreOpcion": 2, "opcionNombre": "Lalo"},
+    ]
+    campanias = [
+        {"nombreCampania": 1, "opcionCampania": "Viltrum te necesita"},
+        {"nombreCampania": 2, "opcionCampania": "Lorem Ipsum"},
+    ]
+    status = [
+        {"nombreStatus": 1, "opcionStatus": "Propuesta"},
+        {"nombreStatus": 2, "opcionStatus": "Aceptada"},
+        {"nombreStatus": 3, "opcionStatus": "En curso"},
+        {"nombreStatus": 4, "opcionStatus": "Finalizada"},
+    ]
+
+
+    context = {
+        "influencers": influencers,
+        "campanias": campanias,
+        "status": status,
+
+    }
+    return render(request, "templatesApp/templateColaboracionCrear.html", context) 
+
+def renderTemplateModificarColaboracion(request):
+    return render(request, "templatesApp/templateColaboracionModificar.html")
+
+def renderTemplateEliminarColaboracion(request):
+    return render(request, "templatesApp/templateColaboracionElimina.html")
+
+def renderTemplateColaboracionCrearOK(request):
+    return render(request, "templatesApp/templateColaboracionCrearOK.html")
+
+def renderTemplateModificarColaboracionOK(request):
+    return render(request, "templatesApp/templateModificarColaboracionOK.html")
+
+def renderTemplateEliminarColaboracionOK(request):
+    return render(request, "templatesApp/templateEliminarColaboracionOK.html")
+
+
+
+
