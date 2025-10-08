@@ -1,11 +1,72 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+<link rel="stylesheet" href="{% static 'css/oportunidades.css' %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Oportunidades</title>
 </head>
 <body>
-    <h1>Este es el template Oportunidades</h1>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="{% url 'hubInfluencer' %}" class="logo">AlmaUnion</a>
+        <ul class="nav-links">
+      <li><a href="{% url 'hubInfluencer' %}">Inicio</a></li>
+      <li><a href="{% url 'oportunidades' %}">Oportunidades</a></li>
+      <li><a href="{% url 'hubInfluencer' %}">Perfil</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Oportunidades</h2>
+            <p>Explora y gestiona tus oportunidades de colaboración.</p>
+            
+            <div class="sidebar-section">
+                <ul class="sidebar-list">
+                    <li>Favoritos</li>
+                </ul>
+            </div>
+            
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <h1>Oportunidades activas</h1>
+            
+            <div class="opportunities-grid">
+                <!-- Tarjeta 1 -->
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <div class="opportunity-name">Tech Innovators Inc.</div>
+                        <div class="tasks-badge">Tasks: 3</div>
+                    </div>
+                    <button class="review-btn">Descripcion</button>
+                </div>
+                
+                <!-- Tarjeta 2 -->
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <div class="opportunity-name">Fashion Forward Co.</div>
+                        <div class="tasks-badge">Tasks: 5</div>
+                    </div>
+                    <button class="review-btn">Descripcion</button>
+                </div>
+                
+                <!-- Tarjeta 3 -->
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <div class="opportunity-name">Eco Living Solutions</div>
+                        <div class="tasks-badge">Tasks: 2</div>
+                    </div>
+                    <button class="review-btn">Descripcion</button>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
