@@ -21,28 +21,24 @@
       <a href="#" class="btn-login">Iniciar Sesión</a>
     </nav>
   </header>
-
   <!-- MAIN -->
   <main class="main">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}      
+    </ul>
+    {% endif %}
     <div class="form-container">
       <h2>Regístrate como Empresa</h2>
       <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
-      <form method='post' action="{% url 'hubEmpresa' %}">
-      <form method='post' action="{% url 'Login' %}"> 
+      <form action="{% url 'login' %}" class="form" method="POST">
         {% csrf_token %}
-        <input type="text" placeholder="Nombre de la empresa" required>
-        <input type="text" placeholder="RUT de la empresa" required>
-        <select required>
-          <option disabled selected>Categoría de la industria</option>
-          <option value="fashion">Moda</option>
-          <option value="tech">Tecnología</option>
-          <option value="gaming">Videojuegos</option>
-          <option value="food">Comida</option>
-          <option value="travel">Viajes</option>
-        </select>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="password" placeholder="Contraseña" required>
-        <button type="submit" class="btn-register">Registrarse</button>
+        {{ usuarioForm.as_p }}
+        {{ empresaForm.as_p }}
+        {{ redesSocialesForm.as_p }}
+        <button type="submit" name="submit_empresa"></button>
       </form>
     </div>
   </main>

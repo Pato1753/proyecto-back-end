@@ -1,7 +1,24 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.hashers import check_password
 from django.contrib import messages
+from django.db import transaction
+from django.urls import reverse
+
+from almaUnionApp.models import Usuarios
+from almaUnionApp.choices.RolChoices import RolChoices
+from almaUnionApp.forms.RegistroEmpresaForm import (RegistroUsuarioForm as RegistroUsuarioFormEm,
+                                                    RegistroEmpresaForm as RegistroEmpresaFormEm,
+                                                    RegistroRedesSocialesForm as RegistroRedesSocialesFormEm)
+from almaUnionApp.forms.RegistroInfluencerForm import (RegistroUsuarioForm as RegistroUsuarioFormIn,
+                                                       RegistroInfluencerForm as RegistroInfluencerFormIn,
+                                                       RegistroRedesSocialesForm as RegistroRedesSocialesFormIn)
+from almaUnionApp.forms.InicioSesionForm import InicioForm as iniForm
+from .utils import sessionInicioRequerida, rolRequerido
+
 from datetime import datetime
+from django.contrib import messages
+
 
 # Lista/diccionario de usuarios permitidos
 # formato: usuario: (contraseña, rol)
@@ -18,6 +35,137 @@ INFLUENCER = {
         "seguidores": 5000,
     }
 }
+
+
+
+def renderTemplateMenuInicial(request):
+    return render(request, "templatesApp/templateMenuInicial.html")
+
+@transaction.atomic
+def renderTemplateRegistroEmpresa(request):
+    if request.method == "POST" and "submit_empresa" in request.POST:
+        empresaForm = RegistroEmpresaFormEm(request.POST)
+        usuarioForm = RegistroUsuarioFormEm(request.POST)
+        redesSocialesForm = RegistroRedesSocialesFormEm(request.POST)
+
+        if empresaForm.is_valid() and usuarioForm.is_valid() and redesSocialesForm.is_valid():
+
+            empresa = empresaForm.save()
+            
+            usuario = usuarioForm.save(commit=False)
+            usuario.rol = RolChoices.EMPRESA          
+            usuario.id_empresa_usuarios = empresa.id_empresa  
+            usuario.id_influencer_usuarios = None
+            usuario.save()
+            
+            redesSociales = redesSocialesForm.save(commit=False)
+            redesSociales.id_empresa_redes = empresa.id_empresa
+            redesSociales.id_influencer_redes = None
+            redesSociales.save()
+            
+            messages.success(request, "Empresa registrada correctamente")
+            return redirect("login")
+        else:
+                messages.error(request, "Revisa los datos ingresados")
+    else:
+        empresaForm = RegistroEmpresaFormEm()
+        usuarioForm = RegistroUsuarioFormEm()
+        redesSocialesForm = RegistroRedesSocialesFormEm()
+                
+    return render(request, "templatesApp/templateRegistroEmpresa.html", { 
+        "empresaForm": empresaForm,
+        "usuarioForm": usuarioForm,
+        "redesSocialesForm": redesSocialesForm
+    })
+        
+@transaction.atomic
+def renderTemplateRegistroInfluencer(request):
+    if request.method == 'POST' and "submit_influencer" in request.POST:
+        usuarioForm = RegistroUsuarioFormIn(request.POST)
+        influencerForm = RegistroInfluencerFormIn(request.POST)
+        redesSocialesForm = RegistroRedesSocialesFormIn(request.POST)
+        
+        if usuarioForm.is_valid() and influencerForm.is_valid() and redesSocialesForm.is_valid():
+            influencer = influencerForm.save()
+            
+            usuario = usuarioForm.save(commit=False)
+            usuario.rol = RolChoices.INFLUENCER         
+            usuario.id_influencer_usuarios = influencer.id_influencer
+            usuario.id_empresa_usuarios = None
+            usuario.save()
+            
+            redesSociales = redesSocialesForm.save(commit=False)
+            redesSociales.id_influencer_redes = influencer.id_influencer
+            redesSociales.id_empresa_redes = None
+            redesSociales.save()
+            
+            messages.success(request, "Influencer registrado correctamente")
+            return redirect("login")
+        else:
+            messages.error(request, "Revisa los datos ingresados")
+    else:
+        usuarioForm = RegistroUsuarioFormIn()
+        influencerForm = RegistroInfluencerFormIn()
+        redesSocialesForm = RegistroRedesSocialesFormIn()
+
+    return render(request, "templatesApp/templateRegistroInfluencer.html", {
+        "usuarioForm": usuarioForm,
+        "influencerForm": influencerForm,
+        "redesSocialesForm": redesSocialesForm
+    })
+
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
+def actualizar_influencer(request):
+    # Tu lógica de actualización
+    pass
+
+@transaction.atomic
+def renderTemplateInicio(request):
+    if request.method == "POST" and "submit_inicio" in request.POST:
+        inicioForm = iniForm(request.POST)
+
+        if inicioForm.is_valid():
+            email = inicioForm.cleaned_data["email"].strip().lower()
+            contrasena = inicioForm.cleaned_data["contrasena"]
+
+            # Buscar usuario por email (case-insensitive)
+            try:
+                usuario = Usuarios.objects.get(email__iexact=email)
+            except Usuarios.DoesNotExist:
+                messages.error(request, "Correo o contraseña inválidos.")
+                return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
+
+            # Validar contraseña hasheada
+            if not check_password(contrasena, usuario.contrasena):
+                messages.error(request, "Correo o contraseña inválidos.")
+                return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
+
+            # Sesión “custom”
+            request.session.cycle_key()
+            request.session["uid"] = usuario.id_usuario
+            request.session["email"] = usuario.email
+            request.session["rol"] = usuario.rol
+            request.session.set_expiry(60 * 60 * 4)  # 4 horas
+
+            # Redirección por rol
+            if usuario.rol == RolChoices.EMPRESA:
+                messages.success(request, "¡Bienvenido!")
+                return redirect(reverse("hubEmpresa"))
+            elif usuario.rol == RolChoices.INFLUENCER:
+                messages.success(request, "¡Bienvenido!")
+                return redirect(reverse("hubInfluencer"))
+            else:
+                messages.warning(request, "No se encontró rol. Te llevamos al inicio.")
+                return redirect("inicio")
+
+        # <-- Este else corresponde a inicioForm.is_valid()
+        messages.error(request, "Por favor corrige los errores del formulario.")
+        return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
+
+    # GET u otros casos
+    inicioForm = iniForm()
+    return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
 
 def actualizar_influencer(request):
     username = "influencer"  # Aquí deberías sacar el usuario logueado de la sesión
@@ -42,43 +190,35 @@ def actualizar_influencer(request):
     return render(request, "templatesApp/actualizar_influencer.html", {
         "user": INFLUENCER[username]
     })
-def renderTemplateMenuInicial(request):
-    return render(request, "templatesApp/templateMenuInicial.html")
 
-def renderTemplateRegistroEmpresa(request):
-    return render(request, "templatesApp/templateRegistroEmpresa.html")
-
-@csrf_protect
-def renderTemplateRegistroInfluencer(request):
-    return render(request, "templatesApp/templateRegistroInfluencer.html")
-
+@sessionInicioRequerida
+@rolRequerido(RolChoices.EMPRESA)
 def renderTemplateHubEmpresa(request):
-    infoPerfil = {"fotoPerfil": "assets/avatarEmpresa.png", "nombrePerfil": "Patricio Patoso"}
-    botones = [
-        {"label": "Inicio", "viewName": "inicio", "sourceImagen":"assets/casa.png", "sourceAlternative": "inicioLogo"},
-        {"label": "Influencers", "viewName": "influencers", "sourceImagen":"assets/users.png", "sourceAlternative": "influencersLogo"},
-        {"label": "Campañas", "viewName": "campanias", "sourceImagen":"assets/metricas.png", "sourceAlternative": "campañaLogo"},
-        {"label": "Perfil", "viewName": "perfil", "sourceImagen":"assets/user.png", "sourceAlternative": "userLogo"},
-        {"label": "Mensajes", "viewName": "mensajes", "sourceImagen":"assets/burbuja.png", "sourceAlternative": "mensajeLogo"},
-        {"label": "Pagos", "viewName": "pagos", "sourceImagen":"assets/tarjetaDeBanco.png", "sourceAlternative": "pagosLogo"},
-        {"label": "Configuración", "viewName": "configuracion", "sourceImagen":"assets/ajustes.png", "sourceAlternative": "configuraciónLogo"},
-    ]
-    return render(request, "templatesApp/templateHubEmpresa.html", {"botones" : botones, "infoPerfil": infoPerfil})
-
+    uid = request.session["uid"]
+    usuario = (Usuarios.objects
+               .only("id_usuario", "email", "rol", "id_empresa_usuarios")
+               .get(id_usuario=uid))
+    
+    empresa = usuario.id_empresa_usuarios
+    if not empresa:
+        return render(request, "templatesApp/hubEmpresa_vacio.html", {"usuario": usuario})
+    """ Datos base del perfil """
+    return render(request, "templatesApp/templateHubEmpresa.html", {"usuario": usuario})
+    
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
 def renderTemplateHubInfluencer(request):
-    infoPerfil = {"fotoPerfil": "assets/avatarInfluencer.png", "nombrePerfil": "Rubí Rubíes"}
-    botones = [
-        {"label": "Inicio", "viewName": "inicio", "sourceImagen": "assets/casa.png", "sourceAlternative": "inicioLogo"},
-        {"label": "Oportunidades", "viewName": "oportunidades", "sourceImagen": "assets/maleta.png", "sourceAlternative": "oportunidadesLogo"},
-        {"label": "Informes", "viewName": "informes", "sourceImagen": "assets/metricas.png", "sourceAlternative": "informesLogo"},
-        {"label": "Perfil", "viewName": "perfil", "sourceImagen": "assets/user.png", "sourceAlternative": "perfilLogo"},
-        {"label": "Configuración", "viewName": "configuracion", "sourceImagen": "assets/ajustes.png", "sourceAlternative": "configuraciónLogo"},
-    ]
-    contexto = {
-        "botones": botones,
-        "infoPerfil": infoPerfil
-    }
-    return render(request, "templatesApp/templateHubInfluencer.html", contexto)
+    uid = request.session["uid"]
+    
+    usuario = (Usuarios. objects
+               .only("id_usuario", "email", "rol", "id_influencer_usuarios")
+               .get(id_usuario=uid))
+    influencer = usuario.id_influencer_usuarios
+    if not influencer:
+        return render(request, "templatesApp/hubInfluencerVacio.html", {"usuario": usuario})
+    # Datos base del perfil
+    
+    return render(request, "templatesApp/templateHubInfluencer.html", {"usuario": usuario})
 
 # Render en común influencer-Empresa
 def renderTemplateConfiguracion(request):
@@ -86,25 +226,6 @@ def renderTemplateConfiguracion(request):
 
 def renderTemplatePerfil(request):
     return render(request, "templatesApp/templatePerfil.html")
-
-# Render del login con validación
-def renderTemplatesLogin(request):
-    error = None
-    if request.method == "POST":
-        username = request.POST.get("correo")
-        password = request.POST.get("password")
-
-        if username in USERS and USERS[username][0] == password:
-            rol = USERS[username][1]
-
-            if rol == "EMPRESA":
-                return redirect("hubEmpresa")  # <-- nombre de la url del hub empresa
-            elif rol == "INFLUENCER":
-                return redirect("hubInfluencer")  # <-- nombre de la url del hub influencer
-        else:
-            error = "Usuario o contraseña incorrectos"
-
-    return render(request, "templatesApp/templateLoginInflu.html", {"error": error})
 
 def renderTemplateOportunidades(request):
     return render(request, "templatesApp/templateOportunidades.html")
@@ -266,6 +387,15 @@ def renderTemplateModificarColaboracionOK(request):
 def renderTemplateEliminarColaboracionOK(request):
     return render(request, "templatesApp/templateEliminarColaboracionOK.html")
 
+def renderTemplateRedesSociales(request):
+    return render(request, "templatesApp/templateRedesSociales.html")
+        
+def renderTemplateRedesSocialesCrear(request):
+    return render(request, "templatesApp/templateRedesSocialesCrear.html")
 
+def renderTemplateRedesSocialesModificar(request):
+    return render(request, "templatesApp/templateRedesSocialesModificar.html")
 
+def renderTemplateRedesSocialesEliminar(request):
+    return render(request, "templatesApp/templateRedesSocialesEliminar.html")
 

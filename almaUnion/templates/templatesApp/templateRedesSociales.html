@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizar Redes Sociales</title>
+  </head>
+  <body>
+    <main>
+      <div>
+        <h1>Tabla de Redes Sociales</h1>
+        <h2>Elit dolore laboris ipsum elit anim.</h2>
+      </div>
+      <div>
+        <span>
+          <select name="red_social" id="red_social">
+            <option value="">Por Plataforma</option>
+            {% for red in redes %}
+            <option value="{{ red }}">{{ red }}</option>
+            {% empty %}
+            <option disabled>No hay redes</option>
+            {% endfor %}
+          </select>
+        </span>
+        <span>
+          <button>
+            <a
+              href="{% url botonMetrica %}"
+            ></a>
+          </button>
+          <button>
+            <a href="{% url agregarRedSocial %}"></a>
+          </button>
+        </span>
+      </div>
+<section style="margin-top:24px">
+    <h2>Listado</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Plataforma</th>
+          <th>Username</th>
+          <th>Link del canal</th>
+          <th>Seguidores</th>
+          <th>Vistas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for red in redes %}
+          <tr>
+            <td>{{ c.id_redes_sociales }}</td>
+            <td>{{ c.get_plataforma_display|default:c.plataforma }}</td>
+            <td>{{ c.user_name }}</td>
+            <td><a href="{{ c.canal }}" target="_blank" rel="noopener">{{ c.canal }}</a></td>
+            <td>{{ c.seguidores }}</td>
+            <td>{{ c.vistas }}</td>
+            <td class="acciones">
+              <a href="{% url 'canal_detalle' c.pk %}" title="Mostrar">Mostrar</a>
+              <a href="{% url 'canal_editar' c.pk %}" title="Editar">Editar</a>
+              <a href="{% url 'canal_eliminar' c.pk %}" title="Editar">Editar</a>
+                <button type="submit" onclick="return confirm('¿Eliminar este canal?')">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">Sin registros.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+    </main>
+  </body>
+</html>

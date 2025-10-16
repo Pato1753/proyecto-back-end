@@ -20,90 +20,12 @@
   <main class="page">
     <section class="card">
       <h1>Regístrate como Influencer</h1>
-
-      <form action="{% url 'Login' %}" class="form" method="POST" novalidate>
+      <form class="form" method="POST" > 
         {% csrf_token %}
-        <div class="grid two">
-          <div class="field">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" />
-          </div>
-          <div class="field">
-            <label for="apellidoP">Apellido Paterno</label>
-            <input id="apellidoP" name="apellidoP" type="text" placeholder="Tu apellido paterno" />
-          </div>
-        </div>
-
-        <div class="grid two">
-          <div class="field">
-            <label for="apellidoM">Apellido Materno</label>
-            <input id="apellidoM" name="apellidoM" type="text" placeholder="Tu apellido materno" />
-          </div>
-          <div class="field">
-            <label for="rut">RUT</label>
-            <input id="rut" name="rut" type="text" placeholder="Tu RUT" />
-          </div>
-        </div>
-
-        <div class="grid one">
-          <div class="field">
-            <label for="plataforma">Plataforma Principal</label>
-            <input id="plataforma" name="plataforma" type="text" placeholder="Ej: Instagram, TikTok, YouTube" />
-          </div>
-        </div>
-
-        <div class="grid two">
-          <div class="field">
-            <label for="seguidores">Número de Seguidores</label>
-            <input id="seguidores" name="seguidores" type="number" placeholder="Ej: 10000" />
-          </div>
-          <div class="field">
-            <label for="visitas">Visitas Promedio por Publicación</label>
-            <input id="visitas" name="visitas" type="number" placeholder="Ej: 5000" />
-          </div>
-        </div>
-
-        <div class="grid one">
-          <div class="field">
-            <label for="categoria">Categoría de Contenido</label>
-            <div class="select-wrap">
-              <select id="categoria" name="categoria">
-                <option value="" selected>Selecciona una categoría</option>
-                <option value="moda">Moda</option>
-                <option value="tecnologia">Tecnología</option>
-                <option value="fitness">Fitness</option>
-                <option value="viajes">Viajes</option>
-                <option value="gastronomia">Gastronomía</option>
-                <option value="educacion">Educación</option>
-                <option value="gaming">Gaming</option>
-              </select>
-              <span class="select-caret" aria-hidden="true">▾</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid one">
-          <div class="field">
-            <label for="correo">Correo Electrónico</label>
-            <input id="correo" name="correo" type="email" placeholder="tu.correo@ejemplo.com" />
-          </div>
-        </div>
-
-        <div class="grid one">
-          <div class="field">
-            <label for="password">Contraseña</label>
-            <input id="password" name="password" type="password" placeholder="Crea una contraseña segura" />
-          </div>
-        </div>
-
-        <div class="grid one">
-          <div class="field">
-            <label for="password">Contraseña</label>
-            <input id="password_conf" name="password_conf" type="password" placeholder="Confirme su contraseña" />
-          </div>
-        </div>
-
-        <button class="btn-primary" type="submit">Crear Cuenta</button>
+        {{ usuarioForm.as_p }}
+        {{ influencerForm.as_p }}
+        {{ redesSocialesForm.as_p }}
+        <button class="btn-primary" type="submit" name="submit_influencer">Crear Cuenta</button>
       </form>
     </section>
   </main>

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistroEmpresa,
-                                renderTemplateRegistroInfluencer,renderTemplatesLogin ,
+                                renderTemplateRegistroInfluencer, renderTemplateInicio,
                                 renderTemplateHubEmpresa,renderTemplateHubInfluencer,
                                 renderTemplateCampanias,renderTemplateConfiguracion,
                                 renderTemplateInfluencers, renderTemplateInformes,
@@ -30,7 +30,9 @@ from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistr
                                 renderTemplatePerfil, renderTemplateCrearCampanias,
                                 renderTemplateModificarCampanias, renderTemplateEliminarCampanias,
                                 renderTemplateCrearCampaniasOK, renderTemplateModificarCampaniasOK,
-                                renderTemplateEliminarCampaniaOK
+                                renderTemplateEliminarCampaniaOK, renderTemplateRedesSociales,
+                                renderTemplateRedesSocialesCrear, renderTemplateRedesSocialesModificar,
+                                renderTemplateRedesSocialesEliminar,
                                 )
 urlpatterns = [
     # Agrupación path admin 
@@ -38,9 +40,9 @@ urlpatterns = [
     # Agrupación path Menu inicial
     path("", renderTemplateMenuInicial, name='inicio'),
     # Agrupación path Registro de usuario
-    path("registroEmpresa/",renderTemplateRegistroEmpresa, name='registroEmpresa'),
+    path("registroEmpresa/", renderTemplateRegistroEmpresa, name='registroEmpresa'),
     path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
-    path("Login-Influencer/", renderTemplatesLogin, name='Login'),
+    path("login/", renderTemplateInicio, name='login'),
     path("influencer/editar/", actualizar_influencer, name="actualizar_influencer"),
     # Agrupación path redirección al Hub
     path("hubEmpresa/", renderTemplateHubEmpresa, name='hubEmpresa'),
@@ -48,6 +50,10 @@ urlpatterns = [
     # agrupación path redirección aside común influencer-Empresa
     path("perfil/", renderTemplatePerfil, name='perfil'), 
     path("configuracion/", renderTemplateConfiguracion, name='configuracion'),
+    path("redSocial/<int:pk>", renderTemplateRedesSociales, name='redSocial'),
+    path("redSocial/<int:pk>/crear", renderTemplateRedesSocialesCrear, name='redSocialCrear'),
+    path("redSocial/<int:pk>/modificar", renderTemplateRedesSocialesModificar, name='redSocialModificar'),
+    path("redSocial/<int:pk>/eliminar", renderTemplateRedesSocialesEliminar, name='redSocialEliminar'),
     # Agrupación path redirección aside Empresa
     path("influencers/", renderTemplateInfluencers, name='influencers' ),
     path("campanias/", renderTemplateCampanias, name='campanias'),
@@ -70,4 +76,5 @@ urlpatterns = [
    path("campanias/EliminarOK/", renderTemplateEliminarCampaniaOK, name='eliminarCampaniasOK'),
    path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
    path("informes/", renderTemplateInformes, name='informes'),
+   
 ]

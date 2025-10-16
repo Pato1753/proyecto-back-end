@@ -34,3 +34,9 @@ Miercoles 10 de Septiembre:
 jueves 11 de Septiembre:
 se añade templates de usuario y de empresa
 se crea el editar influencer para que el influencer pueda editar informacion personal
+
+
+Lunes 13 de Septiembre:
+- Se realizara la refactorización del registro de usuario para coincidir con los cambios requeridos con la rubrica
+- Se debe cambiar los FK de Campanas(id_empresa), de Colaboradores(id_influencer, id_colaboracion, id_campana), de Metricas_h(id_influencer, id_empresa), de Usuarios(id_empresa, id_influencer)
+- Se esta realizando form
