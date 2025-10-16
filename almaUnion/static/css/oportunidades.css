@@ -1,0 +1,199 @@
+
+/* --- Reset y fuente --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #0e1621;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Navbar --- */
+.navbar {  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    background-color: #0b1119;
+    border-bottom: 1px solid #1e90ff33;
+}
+
+.logo {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #1e90ff;
+}
+.logo:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.nav-links {  
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin-right: 150px;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin-right: 30px;
+}
+
+.nav-links a:hover {
+    color: #1e90ff;
+}
+
+/* --- Contenedor principal --- */
+.container {
+    display: flex;
+    padding: 3rem;
+    gap: 2rem;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 280px;
+    background-color: #151e29;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    height: fit-content;
+}
+
+.sidebar h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #1e90ff;
+}
+
+.sidebar-section {
+    margin-bottom: 2rem;
+}
+
+.sidebar-section h3 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: #ddd;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-list li {
+    padding: 0.6rem 0;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.sidebar-list li:hover {
+    color: #1e90ff;
+}
+
+.budget-input {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #1e2835;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.budget-input:focus {
+    outline: 2px solid #1e90ff;
+}
+
+/* --- Contenido principal --- */
+.main-content {
+    flex: 1;
+}
+
+.main-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+/* --- Tarjetas de oportunidades --- */
+.opportunities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.opportunity-card {
+    background-color: #151e29;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+}
+
+.opportunity-card:hover {
+    transform: translateY(-5px);
+}
+
+.opportunity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.opportunity-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.tasks-badge {
+    background-color: #1e90ff;
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.review-btn {
+    background-color: #1e2835;
+    color: #1e90ff;
+    border: 1px solid #1e90ff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: auto;
+    margin-top: 0.5rem;
+}
+
+.review-btn:hover {
+    background-color: #1e90ff;
+    color: white;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}

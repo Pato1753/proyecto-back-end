@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Sophia Bennett</title>
+    <title>Sofia castro(Modificar segun resultado de BD)</title>
     <link rel="stylesheet" href="{% static 'css/hubinfluencer.css' %}">
 </head>
 <body>
@@ -13,13 +13,13 @@
     <aside class="sidebar">
         <div class="profile">
             <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophia Bennett" class="profile-img">
-            <h2>Sophia Bennett</h2>
+            <h2>Sofia Aguirre (Modificar segun resultado de BD)</h2>
             <p>Influencer</p>
         </div>
         
         <ul class="menu">
             <li><a href="#" class="active"><i class="fas fa-home"></i> Inicio</a></li>
-            <li><a href="#"><i class="fas fa-bullhorn"></i> Oportunidades</a></li>
+            <li><a href="{% url 'oportunidades' %}"><i class="fas fa-bullhorn"></i> Oportunidades</a></li>
             <li><a href="#"><i class="fas fa-money-bill-wave"></i> Pagos</a></li>
             <li><a href="#"><i class="fas fa-bell"></i> Notificaciones</a></li>
             <li><a href="{% url 'actualizar_influencer'%}"><i class="fas fa-user-edit"></i> Edita Perfil</a></li>
@@ -29,7 +29,7 @@
     <!-- Contenido principal -->
     <main class="main-content">
         <section class="welcome-section">
-            <h1>Bienvenida, Sophia</h1>
+            <h1>Bienvenida, Sophia (Modificar segun resultado de BD)</h1>
             <p>Selecciona una opción del menú para empezar. Aquí puedes gestionar tus campañas, revisar tus pagos y actualizar tu perfil.</p>
         </section>
         
