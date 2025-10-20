@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Oportunidades de Colaboración</title>
+    <link rel="stylesheet" href="{% static 'css/oportunidades.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="{% url 'hubInfluencer' %}" class="logo">AlmaUnion</a>
+      <ul class="nav-links">
+        <li><a href="{% url 'hubInfluencer' %}">Inicio</a></li>
+        <li><a href="{% url 'oportunidades' %}">Oportunidades</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <aside class="sidebar">
+        <h2>Filtros de Oportunidades</h2>
+        <div class="sidebar-section">
+          <h3>Categoría</h3>
+          <ul class="sidebar-list">
+            <li>Tecnología</li>
+            <li>Moda y Belleza</li>
+            <li>Viajes y Turismo</li>
+            <li>Alimentos</li>
+          </ul>
+        </div>
+        <div class="sidebar-section">
+          <h3>Presupuesto Mínimo</h3>
+          <input
+            type="number"
+            class="budget-input"
+            placeholder="Min. Presupuesto"
+          />
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <h1>Oportunidades Disponibles</h1>
+
+        {% if oportunidades %}
+        <div class="opportunities-grid">
+          {% for campana in oportunidades %}
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <span class="opportunity-name">{{ campana.nombre_campana }}</span>
+              <span class="tasks-badge"
+                >Empresa #{{ campana.id_empresa_campanas }}</span
+              >
+            </div>
+
+            <p>{{ campana.descripcion|truncatechars:150 }}</p>
+            <hr
+              style="margin: 10px 0; border: 0; border-top: 1px solid #1e2835"
+            />
+              <p><b>Presupuesto:</b> ${{ campana.presupuesto | default:"A Convenir" }}</p>
+            <p>
+              <strong>Inicio:</strong> {{ campana.fecha_inicio|default:"N/A" }}
+            </p>
+
+            <form method="post" action="{% url 'seleccionarCampana' %}">
+              {% csrf_token %}
+              <input
+                type="hidden"
+                name="id_campana"
+                value="{{ campana.id_campana }}"
+              />
+              <button class="review-btn" type="submit">Ver Detalles</button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div
+          class="messages"
+          style="background-color: #4e1717; border-left: 4px solid #ff4d4d"
+        >
+          <li>
+            Actualmente no hay campañas u oportunidades de colaboración
+            disponibles.
+          </li>
+        </div>
+        {% endif %}
+      </main>
+    </div>
+  </body>
+</html>

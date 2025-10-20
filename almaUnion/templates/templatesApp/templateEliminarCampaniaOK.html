@@ -1,0 +1,76 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        th, span, h1 {
+            color: white;
+        }
+    </style>
+    <title>Campañias</title>
+  </head>
+  <body style="background-color: black;">
+    <div>
+      <h1>Campañas</h1>
+      <a href="{% url 'crearCampanias' %}">
+        <img
+          src="{% static 'assets/agregar.png' %}"
+          alt="agregarCampaniaLogo"
+        />
+        <span>Nueva campaña</span>
+      </a>
+    </div>
+    <div>
+      <span>
+        <img src="{% static 'assets/lupa.png' %}" alt="buscarCampania" />
+        <input type="text" placeholder="Buscar Campaña" />
+      </span>
+      <span>
+        <img src="{% static 'assets/calendario.png' %}" alt="fechaLogo" />
+        <input type="text" placeholder="Buscar por fecha(YYYY-MM-DD)" />
+      </span>
+      <span>
+        <img src="{% static 'assets/dinero.png' %}" alt="presupuestoLogo" />
+        <input type="text" placeholder="Buscar por presupuesto" />
+      </span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre de campaña</th>
+          <th>Descripcion</th>
+          <th>Fecha de inicio</th>
+          <th>Fecha de fin</th>
+          <th>Presupuesto</th>
+          <th>acción</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for campania in campanias %}
+        <tr>
+          <td>{{ campania.nombre }}</td>
+          <td>{{ campania.descripcion }}</td>
+          <td>{{ campania.fechaInicio|date:"Y-m-d" }}</td>
+          <td>{{ campania.fechaFin|date:"Y-m-d" }}</td>
+          <td>{{ campania.presupuesto }}</td>
+          <td>
+            <a href="{% url 'modificarCampanias' %}"
+              ><img src="{% static 'assets/lapiz.png' %} " alt="ediciónLogo"
+            /></a>
+          </td>
+          <td>
+            <a href="{% url 'eliminarCampanias' %}"
+              ><img src="{% static 'assets/basurero.png' %}"
+              alt="eliminarLogo"></a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

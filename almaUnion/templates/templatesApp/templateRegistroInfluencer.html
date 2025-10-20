@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alma Union — Registro</title>
+  <link rel="stylesheet" href="{% static 'css/registroInfluencer.css' %}" />
+
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">AlmaUnion</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Regístrate como Influencer</h1>
+      <form class="form" method="POST" > 
+        {% csrf_token %}
+        {{ usuarioForm.as_p }}
+        {{ influencerForm.as_p }}
+        {{ redesSocialesForm.as_p }}
+        <button class="btn-primary" type="submit" name="submit_influencer">Crear Cuenta</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

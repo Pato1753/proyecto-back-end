@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Oportunidad - {{ campana.nombre_campana }}</title>
+    <link rel="stylesheet" href="{% static 'css/OportunidadesDetalles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'hubInfluencer' %}" class="logo">AlmaUnion</a>
+        <ul class="nav-links">
+            <li><a href="{% url 'hubInfluencer' %}">Inicio</a></li>
+            <li><a href="{% url 'oportunidades' %}">Oportunidades</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="detail-card">
+            <div class="card-header">
+                <h1>{{ campana.nombre_campana }}</h1>
+                <span class="badge">ID Campaña: {{ campana.id_campana }}</span>
+            </div>
+
+            <div class="description-section">
+                <h2>Descripción Detallada</h2>
+                <p>{{ campana.descripcion|default:"No se proporcionó una descripción para esta campaña." }}</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Presupuesto Asignado:</span>
+                    <span class="value budget-value">${{ campana.presupuesto|default:"A Convenir" }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">Fecha de Inicio:</span>
+                    <span class="value">{{ campana.fecha_inicio|date:"d M Y"|default:"Pendiente" }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="label">Fecha de Cierre:</span>
+                    <span class="value">{{ campana.fecha_fin|date:"d M Y"|default:"Pendiente" }}</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">ID de la Empresa:</span>
+                    <span class="value">{{ campana.id_empresa_campanas|default:"Desconocido" }}</span>
+                </div>
+            </div>
+
+            <div class="action-section">
+<!--                 <p>¿Interesado en esta colaboración?</p>
+                <a href="{% url 'crearColaboracion' %}">
+                    <button class="apply-btn">Postularme / Solicitar Colaboración</button>
+                </a> -->
+                <a href="{% url 'oportunidades' %}" class="back-link">
+                    &larr; Volver a Oportunidades
+                </a>
+            </div>
+        </section>
+
+        <!-- <aside class="side-info">
+            <h2>Requisitos del Influencer</h2>
+            <ul class="requirements-list">
+                <li>Categoría: [Se espera un campo de Categoría aquí]</li>
+                <li>Mínimo Seguidores: 10,000</li>
+                <li>Prom. Vistas Mínimo: 500</li>
+                <li>País: Chile</li>
+            </ul>
+        </aside> -->
+    </main>
+</body>
+</html>

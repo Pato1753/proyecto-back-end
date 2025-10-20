@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -19,7 +18,7 @@
     </nav>
     <div class="search-login">
       <input type="text" placeholder="Buscar...">
-      <button class="btn-login">Iniciar Sesión</button>
+      <button class="btn-login" ><a href="{% url 'login' %}">Iniciar Sesión</a></button>
     </div>
   </header>
 
@@ -35,16 +34,16 @@
   <!-- Opciones -->
   <section class="options">
     <div class="card">
-      <img src="{%static "img/empresa.jpg" %}" alt="empresa">
+      <img src="{%static 'img/empresa.jpg' %}" alt="empresa">
       <h2>¿Eres una Empresa?</h2>
       <p>Encuentra los influencers perfectos para tu marca.</p>
-      <button class="btn-red">Registrarse como Empresa</button>
+      <a href="{% url 'registroEmpresa' %}" ><button class="btn-red" >Registrarse como Empresa</button></a>      
     </div>
     <div class="card">
-      <img src="{%static "img/influencer.jpg" %}" alt="Influencer">
+      <img src="{%static 'img/influencer.jpg' %}" alt="Influencer">
       <h2>¿Eres un Influencer?</h2>
       <p>Colabora con las mejores marcas.</p>
-      <button class="btn-red boton_in">Registrarse como Influencer</button>
+      <a href="{% url 'registroInfluencer' %}"><button class="btn-red boton_in">Registrarse como Influencer</button></a>
     </div>
   </section>
 </body>

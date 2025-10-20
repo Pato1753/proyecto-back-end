@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar campañia</title>
+</head>
+<body>
+    <div>
+        <img src="{% static "assets/peligro.png" %}" alt="aletarLogo">
+        <h1>Confirmar eleminación</h1>
+        <p>Estar seguro de eliminar la campaña "{{ campania.nombre }}"</p>
+        <a href="{% url "campanias" %}">Cancelar</a>
+        <a href="{% url "eliminarCampaniasOK" %}">Confirmar eliminación</a>
+    </div>
+</body>
+</html>

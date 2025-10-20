@@ -1,0 +1,33 @@
+
+<!-- templateBaseHub.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/baseHub.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hubAsideButton.css' %}">
+    {% block agregadorArchivoCss %}{% endblock agregadorArchivoCss %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="{% static infoPerfil.fotoPerfil %}" alt="Imagen de perfil">
+            <b>{{ infoPerfil.nombrePerfil }}</b>
+        </nav>
+    </header>
+    
+    <aside>
+        {% for boton in botones %}
+            {% include "components/asideButton.html" with label=boton.label viewName=boton.viewName sourceImagen=boton.sourceImagen sourceAlternative=boton.sourceAlternative only %}
+        {% endfor %}
+    </aside>
+    
+    <main>
+        <h1 class="base">Panel de Control</h1>
+        {% block main %}{% endblock main %}
+    </main>
+</body>
+</html>

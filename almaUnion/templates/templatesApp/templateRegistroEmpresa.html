@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>AlmaUnion - Registro de Empresas</title>
+  <link rel="stylesheet" href="{% static 'css/registroEmpresa.css' %}">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <h1>AlmaUnion</h1>
+    </div>
+    <nav class="nav">
+      <a href="#">Inicio</a>
+      <a href="#">Influencers</a>
+      <a href="#">Empresas</a>
+      <a href="#">Precios</a>
+      <a href="#" class="btn-login">Iniciar Sesión</a>
+    </nav>
+  </header>
+  <!-- MAIN -->
+  <main class="main">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}      
+    </ul>
+    {% endif %}
+    <div class="form-container">
+      <h2>Regístrate como Empresa</h2>
+      <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
+      <form action="{% url 'login' %}" class="form" method="POST">
+        {% csrf_token %}
+        {{ usuarioForm.as_p }}
+        {{ empresaForm.as_p }}
+        {{ redesSocialesForm.as_p }}
+        <button type="submit" name="submit_empresa"></button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
