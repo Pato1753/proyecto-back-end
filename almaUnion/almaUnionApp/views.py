@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.hashers import check_password
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 from django.db import transaction
 from django.urls import reverse
 
-from almaUnionApp.models import Usuarios
+from almaUnionApp.models import Usuarios, Influencers, Campanas
 from almaUnionApp.choices.RolChoices import RolChoices
 from almaUnionApp.forms.RegistroEmpresaForm import (RegistroUsuarioForm as RegistroUsuarioFormEm,
                                                     RegistroEmpresaForm as RegistroEmpresaFormEm,
@@ -13,33 +13,25 @@ from almaUnionApp.forms.RegistroEmpresaForm import (RegistroUsuarioForm as Regis
 from almaUnionApp.forms.RegistroInfluencerForm import (RegistroUsuarioForm as RegistroUsuarioFormIn,
                                                        RegistroInfluencerForm as RegistroInfluencerFormIn,
                                                        RegistroRedesSocialesForm as RegistroRedesSocialesFormIn)
+from almaUnionApp.forms.ActualizarInfluencerForm import ActualizarInfluencerForm, ActualizarImagenForm
 from almaUnionApp.forms.InicioSesionForm import InicioForm as iniForm
 from .utils import sessionInicioRequerida, rolRequerido
 
 from datetime import datetime
-from django.contrib import messages
 
 
-# Lista/diccionario de usuarios permitidos
-# formato: usuario: (contraseña, rol)
-USERS = {
-    'empresa1': ('1234', 'EMPRESA'),
-    'influencer': ('1234', 'INFLUENCER'),
-}
-INFLUENCER = {
-    "influencer": {
-        "password": "1234",
-        "nombre": "Juan Pérez",
-        "email": "juan@example.com",
-        "red_social": "Instagram",
-        "seguidores": 5000,
-    }
-}
-
-
-
+""" Vista para la visualización del Menu principal o Landing page """
 def renderTemplateMenuInicial(request):
     return render(request, "templatesApp/templateMenuInicial.html")
+
+@login_required
+def renderTemplateCierreSesión(request):
+    """Elimina la session para luego rotar la cookie """
+    if request.method == 'POST'and 'submit_logout' in request.POST:
+        request.session.flush()
+        messages.success(request, "Sessión cerrada.")
+        return redirect("inicio")
+    
 
 @transaction.atomic
 def renderTemplateRegistroEmpresa(request):
@@ -114,11 +106,49 @@ def renderTemplateRegistroInfluencer(request):
         "redesSocialesForm": redesSocialesForm
     })
 
+
 @sessionInicioRequerida
 @rolRequerido(RolChoices.INFLUENCER)
+@transaction.atomic
 def actualizar_influencer(request):
-    # Tu lógica de actualización
-    pass
+    uid = request.session["uid"]
+
+    # Opción A (fuente de verdad en BD)
+    usuario = Usuarios.objects.only("id_usuario","id_influencer_usuarios","imagen_perfil").get(id_usuario=uid)
+    influencer_id = usuario.id_influencer_usuarios
+
+    # Opción B (si guardaste influencer_id en sesión)
+    # influencer_id = request.session.get("influencer_id")
+
+    if not influencer_id:
+        messages.error(request, "Aún no tienes un perfil de influencer asociado.")
+        return redirect("hubInfluencer")
+
+    influencer = get_object_or_404(Influencers, id_influencer=influencer_id)
+
+    if request.method == "POST":
+        form = ActualizarInfluencerForm(request.POST, instance=influencer)
+
+        imagen_form = ActualizarImagenForm(request.POST, request.FILES, instance=usuario)
+
+        if form.is_valid() and imagen_form.is_valid():
+            form.save()
+            imagen_form.save()
+            messages.success(request, "¡Perfil actualizado correctamente!")
+            return redirect("actualizar_influencer")  # PRG
+        messages.error(request, "Revisa los errores del formulario.")
+    else:
+        form = ActualizarInfluencerForm(instance=influencer)
+        imagen_form = ActualizarImagenForm(instance=usuario)
+
+    return render(request, "templatesApp/actualizar_influencer.html", {
+        "form": form,
+        "imagen_form": imagen_form,
+        "influencer": influencer,
+        "usuario": usuario,
+    })
+
+
 
 @transaction.atomic
 def renderTemplateInicio(request):
@@ -141,14 +171,12 @@ def renderTemplateInicio(request):
                 messages.error(request, "Correo o contraseña inválidos.")
                 return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
 
-            # Sesión “custom”
             request.session.cycle_key()
             request.session["uid"] = usuario.id_usuario
             request.session["email"] = usuario.email
             request.session["rol"] = usuario.rol
             request.session.set_expiry(60 * 60 * 4)  # 4 horas
 
-            # Redirección por rol
             if usuario.rol == RolChoices.EMPRESA:
                 messages.success(request, "¡Bienvenido!")
                 return redirect(reverse("hubEmpresa"))
@@ -159,37 +187,11 @@ def renderTemplateInicio(request):
                 messages.warning(request, "No se encontró rol. Te llevamos al inicio.")
                 return redirect("inicio")
 
-        # <-- Este else corresponde a inicioForm.is_valid()
         messages.error(request, "Por favor corrige los errores del formulario.")
         return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
 
-    # GET u otros casos
     inicioForm = iniForm()
     return render(request, "templatesApp/templateLogin.html", {"inicioForm": inicioForm})
-
-def actualizar_influencer(request):
-    username = "influencer"  # Aquí deberías sacar el usuario logueado de la sesión
-
-    if request.method == "POST":
-        nombre = request.POST.get("nombre")
-        email = request.POST.get("email")
-        red_social = request.POST.get("red_social")
-        seguidores = request.POST.get("seguidores")
-
-        # Guardamos cambios en USERS
-        INFLUENCER[username]["nombre"] = nombre
-        INFLUENCER[username]["email"] = email
-        INFLUENCER[username]["red_social"] = red_social
-        INFLUENCER[username]["seguidores"] = seguidores
-
-        print("Usuario actualizado: ",INFLUENCER[username])
-
-        messages.success(request, "¡Datos actualizados correctamente!")
-        return redirect("actualizar_influencer")
-
-    return render(request, "templatesApp/actualizar_influencer.html", {
-        "user": INFLUENCER[username]
-    })
 
 @sessionInicioRequerida
 @rolRequerido(RolChoices.EMPRESA)
@@ -201,8 +203,8 @@ def renderTemplateHubEmpresa(request):
     
     empresa = usuario.id_empresa_usuarios
     if not empresa:
-        return render(request, "templatesApp/hubEmpresa_vacio.html", {"usuario": usuario})
-    """ Datos base del perfil """
+        return render(request, "templatesApp/templateHubEmpresaVacio.html", {"usuario": usuario})
+
     return render(request, "templatesApp/templateHubEmpresa.html", {"usuario": usuario})
     
 @sessionInicioRequerida
@@ -216,19 +218,63 @@ def renderTemplateHubInfluencer(request):
     influencer = usuario.id_influencer_usuarios
     if not influencer:
         return render(request, "templatesApp/hubInfluencerVacio.html", {"usuario": usuario})
-    # Datos base del perfil
+    
+    # Perfil de Influencer
+    influencer = Influencers.objects.filter(
+        id_influencer=usuario.id_influencer_usuarios
+    )
     
     return render(request, "templatesApp/templateHubInfluencer.html", {"usuario": usuario})
 
-# Render en común influencer-Empresa
 def renderTemplateConfiguracion(request):
     return render(request, "templatesApp/templateConfiguracion.html")
 
 def renderTemplatePerfil(request):
     return render(request, "templatesApp/templatePerfil.html")
 
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
 def renderTemplateOportunidades(request):
-    return render(request, "templatesApp/templateOportunidades.html")
+    uid = request.session["uid"]
+    
+    try:
+        oportunidades = Campanas.objects.all()
+    except Exception as e:
+        oportunidades = []
+        print(f"Error al obtener campañas: {e}")
+        
+    return render(request, "templatesApp/templateOportunidades.html", {"oportunidades": oportunidades})
+
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
+def seleccionarCampana(request):
+    if request.method != "POST":
+        return redirect("oportunidades")  # nombre de tu ruta de listado
+
+    id_campana = request.POST.get("id_campana")
+    if not id_campana:
+        messages.error(request, "No se recibió una campaña válida.")
+        return redirect("oportunidades")
+
+    # Valida que exista antes de guardar en sesión (opcional pero recomendado)
+    if not Campanas.objects.filter(id_campana=id_campana).exists():
+        messages.error(request, "La campaña seleccionada no existe.")
+        return redirect("oportunidades")
+
+    request.session["campanaSeleccionada"] = id_campana
+    return redirect("detalleOportunidad")
+
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
+def renderTemplateOportunidadesDetalles(request):
+    id_campana = request.session.get("campanaSeleccionada")
+    if not id_campana:
+        messages.warning(request, "Primero selecciona una campaña.")
+        return redirect("oportunidades")
+
+    campana = get_object_or_404(Campanas, id_campana=id_campana)
+    return render(request, "templatesApp/templateOportunidadesDetalles.html", {"campana": campana})
+
 
 def renderTemplateInformes(request):
     return render(request, "templatesApp/templateInformes.html")
@@ -251,33 +297,8 @@ def renderTemplatex(request):
     return render(request, "templatesApp/templatex.html")
 
 def renderTemplateCrearCampanias(request):
-    influencers = [
-        {"nombreOpcion": 1, "opcionNombre": "Steven"},
-        {"nombreOpcion": 2, "opcionNombre": "Lalo"},
-    ]
-    campanias = [
-        {"nombreCampania": 1, "opcionCampania": "Viltrum te necesita"},
-        {"nombreCampania": 2, "opcionCampania": "Lorem Ipsum"},
-    ]
-    status = [
-        {"nombreStatus": 1, "opcionStatus": "Propuesta"},
-        {"nombreStatus": 2, "opcionStatus": "Aceptada"},
-        {"nombreStatus": 3, "opcionStatus": "En curso"},
-        {"nombreStatus": 4, "opcionStatus": "Finalizada"},
-    ]
-    dias = [
-        {"opcionNombre": "2026-09-11"},
-        {"opcionNombre": "2026-10-16"},
-        {"opcionNombre": "2026-09-01"},
-    ]
-
-    context = {
-        "influencers": influencers,
-        "campanias": campanias,
-        "status": status,
-        "dias": dias,
-    }
-    return render(request, "templatesApp/templateColaboracion.html", context)  # ✅ dict
+    from .models import Campanas
+    campanias = Campanas.objects.get()
 
 
 def renderTemplateModificarCampanias(request):

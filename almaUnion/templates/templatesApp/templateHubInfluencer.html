@@ -5,16 +5,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia castro(Modificar segun resultado de BD)</title>
+    <title>{{ usuario.nombre | default:"Sofia Bennett" }}</title>
     <link rel="stylesheet" href="{% static 'css/hubinfluencer.css' %}">
 </head>
 <body>
     <!-- Panel lateral -->
     <aside class="sidebar">
         <div class="profile">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophia Bennett" class="profile-img">
-            <h2>Sofia Aguirre (Modificar segun resultado de BD)</h2>
+            <img src={{ usuario.imagen_perfil | default:"https://randomuser.me/api/portraits/women/44.jpg" }}
+             alt={{ usuario.nombre | default:"Sophia Bennett" }} class="profile-img">
+            <h2>{{ usuario.nombre | default:"Sofia Aguirre" }}</h2>
             <p>Influencer</p>
+            {% if request.session.uid %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link" name="submit_logout">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+            {% endif %}
         </div>
         
         <ul class="menu">
@@ -29,7 +38,7 @@
     <!-- Contenido principal -->
     <main class="main-content">
         <section class="welcome-section">
-            <h1>Bienvenida, Sophia (Modificar segun resultado de BD)</h1>
+            <h1>Bienvenida,{{ usuario.nombre | default:"Sofia Aguirre" }} </h1>
             <p>Selecciona una opción del menú para empezar. Aquí puedes gestionar tus campañas, revisar tus pagos y actualizar tu perfil.</p>
         </section>
         

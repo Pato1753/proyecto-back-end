@@ -32,13 +32,15 @@ from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistr
                                 renderTemplateCrearCampaniasOK, renderTemplateModificarCampaniasOK,
                                 renderTemplateEliminarCampaniaOK, renderTemplateRedesSociales,
                                 renderTemplateRedesSocialesCrear, renderTemplateRedesSocialesModificar,
-                                renderTemplateRedesSocialesEliminar,
+                                renderTemplateRedesSocialesEliminar, renderTemplateCierreSesión,
+                                renderTemplateOportunidadesDetalles, seleccionarCampana
                                 )
 urlpatterns = [
     # Agrupación path admin 
     path('admin/', admin.site.urls),
     # Agrupación path Menu inicial
     path("", renderTemplateMenuInicial, name='inicio'),
+    path("logout", renderTemplateCierreSesión, name='logout'),
     # Agrupación path Registro de usuario
     path("registroEmpresa/", renderTemplateRegistroEmpresa, name='registroEmpresa'),
     path("registroInfluencer/", renderTemplateRegistroInfluencer, name='registroInfluencer'),
@@ -74,7 +76,12 @@ urlpatterns = [
    path("campanias/crearOK/", renderTemplateCrearCampaniasOK, name='crearCampaniasOK'),
    path("campanias/modificarOK/", renderTemplateModificarCampaniasOK, name='modificarCampaniasOK'),
    path("campanias/EliminarOK/", renderTemplateEliminarCampaniaOK, name='eliminarCampaniasOK'),
+   # Agrupación path redirección oportunidades
    path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
+   path("oportunidades/detalles/", renderTemplateOportunidadesDetalles, name='oportunidadesDetalles'),
+   path('oportunidades/seleccionar/', seleccionarCampana, name='seleccionarCampana'),
+    path('oportunidades/detalle/', renderTemplateOportunidadesDetalles, name='detalleOportunidad'),
+   
    path("informes/", renderTemplateInformes, name='informes'),
    
 ]

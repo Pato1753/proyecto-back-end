@@ -67,5 +67,3 @@ class RegistroRedesSocialesForm( BasePlataformaForm, BaseUsernameForm, BaseCanal
             "vistas",
             ]
         
-
-

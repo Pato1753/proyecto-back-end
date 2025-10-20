@@ -6,7 +6,11 @@ from .formBase.BasePresupuestoForm import BasePresupuestoForm
 from .formBase.BaseFechaInicioForm import BaseFechaInicioForm
 from .formBase.BaseFechaFinForm import BaseFechaFinForm
 
-class ListaCampanasForm( BaseNombreCampanaForm, BaseDescripcionForm, BasePresupuestoForm, BaseFechaInicioForm, BaseFechaFinForm):
+class CrearCampanasForm( BaseNombreCampanaForm,
+                        BaseDescripcionForm,
+                        BasePresupuestoForm,
+                        BaseFechaInicioForm,
+                        BaseFechaFinForm):
     class Meta:
         model = Campanas
         fields = ["nombre_campana",

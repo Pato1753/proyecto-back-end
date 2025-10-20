@@ -5,16 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Sophia Bennett</title>
+    <title>{{ usuario.nombre | Sofia Bennett }}</title>
     <link rel="stylesheet" href="{% static 'css/hubinfluencer.css' %}">
 </head>
 <body>
     <!-- Panel lateral -->
     <aside class="sidebar">
         <div class="profile">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophia Bennett" class="profile-img">
-            <h2>Sophia Bennett</h2>
-            <p>Influencer</p>
+            <img src="{{ usuario.imagen_perfil|default:'https://randomuser.me/api/portraits/women/44.jpg' }}" alt="{{ empresa.nombre_empresa| 'empresa' }}" class="profile-img">
+            <h2>{{ empresa.nombre_empresa }}</h2>
+            <p>Empresa</p>
+            {% if request.session.uid %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link" name="submit_logout">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+            {% endif %}
         </div>
         
         <ul class="menu">
@@ -31,7 +39,7 @@
     <!-- Contenido principal -->
     <main class="main-content">
         <section class="welcome-section">
-            <h1>Bienvenida, Sophia</h1>
+            <h1>Bienvenida, {{ empresa.nombre_empresa| "Ruby Rubíes" }}</h1>
             <p>Selecciona una opción del menú para empezar. Aquí puedes gestionar tus campañas, revisar tus pagos y actualizar tu perfil.</p>
         </section>
         

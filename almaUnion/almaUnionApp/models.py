@@ -2,6 +2,7 @@ from django.db import models
 from almaUnionApp.choices.RolChoices import RolChoices
 from almaUnionApp.choices.PlataformaChoices import PlataformaChoise
 from almaUnionApp.choices.CategoriasChoices import CategoriasChoise
+from .validators.validatorValidarRut import validar_rut
 
 class Empresas(models.Model):
     id_empresa = models.AutoField(primary_key=True)
@@ -21,7 +22,7 @@ class Empresas(models.Model):
 class Influencers(models.Model):
     
     id_influencer = models.AutoField(primary_key=True)
-    rut_influencer = models.CharField(max_length=45, unique=True)
+    rut_influencer = models.CharField(max_length=45, unique=True, validators=[validar_rut])
     nombre = models.CharField(max_length=50, blank=True, null=True)
     apellido_pat = models.CharField(max_length=50, blank=True, null=True)
     apellido_mat = models.CharField(max_length=50, blank=True, null=True)
@@ -33,6 +34,9 @@ class Influencers(models.Model):
         verbose_name = 'Influencer'
         verbose_name_plural = 'Influencers'
         db_table = 'influencers'
+        
+    def __str__(self):
+        return f"{self.nombre} {self.apellido_pat} - {self.rut_influencer}"
 
 class Campanas(models.Model):
     id_campana = models.AutoField(primary_key=True)
@@ -71,12 +75,15 @@ class Colaboraciones(models.Model):
 class MetricasH(models.Model):
     id_metrica = models.AutoField(primary_key=True)
     id_influencer_metricas = models.IntegerField(blank=True, null=True)
-    id_empresa_metricas = models.IntegerField(blank=True, null=True) 
+    id_empresa_metricas = models.IntegerField(blank=True, null=True)
+    nombre_metrica = models.CharField(max_length=250, blank=True, null=True)
     plataforma = models.CharField(max_length=20, choices=PlataformaChoise.choices, blank=True, null=True)
     fecha_analisis = models.DateField(blank=True, null=True)
-    seguidores = models.BigIntegerField(blank=True, null=True)
-    likes = models.BigIntegerField(blank=True, null=True)
-    comentarios = models.BigIntegerField(blank=True, null=True)
+    video = models.URLField(max_length=150, blank=True, null=False)
+    vistas = models.BigIntegerField(blank=True, null=True)
+    seguidores = models.IntegerField(blank=True, null=True)
+    likes = models.IntegerField(blank=True, null=True)
+    comentarios = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Metrica Historica'
@@ -110,7 +117,7 @@ class Usuarios(models.Model):
     contrasena = models.CharField(max_length=255)
     rol = models.CharField(max_length=15,choices= RolChoices.choices)
     verificado = models.BooleanField(default=False)
-    imagen_perfil =models.ImageField(upload_to='almaUnion.static.img.empresa', blank=True, null=True)
+    imagen_perfil =models.ImageField(upload_to='imagenes/', blank=True, null=True)
     id_empresa_usuarios = models.IntegerField(blank=True, null=True)
     id_influencer_usuarios = models.IntegerField(blank=True, null=True)
     
