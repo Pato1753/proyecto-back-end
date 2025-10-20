@@ -6,6 +6,7 @@
   --gray-light: #cbd5e1;
 }
 
+
 * {
   margin: 0;
   padding: 0;
@@ -42,6 +43,7 @@ body {
   background-color: var(--primary-color);
   border-radius: 50%;
 }
+
 
 .logo h1 {
   font-size: 1.2rem;
@@ -113,6 +115,7 @@ body {
 .form-container p a:hover {
   color: #b91c1c;
 }
+
 
 /* FORM */
 form {

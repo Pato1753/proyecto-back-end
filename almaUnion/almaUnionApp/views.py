@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import check_password
 from django.db import transaction
 from django.urls import reverse
 
-from almaUnionApp.models import Usuarios, Influencers, Campanas
+from almaUnionApp.models import Usuarios, Influencers, Campanas, Empresas
 from almaUnionApp.choices.RolChoices import RolChoices
 from almaUnionApp.forms.RegistroEmpresaForm import (RegistroUsuarioForm as RegistroUsuarioFormEm,
                                                     RegistroEmpresaForm as RegistroEmpresaFormEm,
@@ -24,7 +24,7 @@ from datetime import datetime
 def renderTemplateMenuInicial(request):
     return render(request, "templatesApp/templateMenuInicial.html")
 
-@login_required
+@sessionInicioRequerida
 def renderTemplateCierreSesión(request):
     """Elimina la session para luego rotar la cookie """
     if request.method == 'POST'and 'submit_logout' in request.POST:
@@ -204,8 +204,34 @@ def renderTemplateHubEmpresa(request):
     empresa = usuario.id_empresa_usuarios
     if not empresa:
         return render(request, "templatesApp/templateHubEmpresaVacio.html", {"usuario": usuario})
+    
+        # Perfil de Empresa
+    empresa = Empresas.objects.filter(
+        id_empresa=usuario.id_empresa_usuarios
+    )
 
     return render(request, "templatesApp/templateHubEmpresa.html", {"usuario": usuario})
+    
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
+def renderTemplateHubInfluencer(request):
+    uid = request.session["uid"]
+    
+    usuario = (Usuarios. objects
+               .only("id_usuario", "email", "rol", "id_influencer_usuarios")
+               .get(id_usuario=uid))
+    influencer = usuario.id_influencer_usuarios
+    if not influencer:
+        return render(request, "templatesApp/hubInfluencerVacio.html", {"usuario": usuario})
+    
+    # Perfil de Influencer
+    influencer = Influencers.objects.filter(
+        id_influencer=usuario.id_influencer_usuarios
+    )
+    
+    return render(request, "templatesApp/templateHubInfluencer.html", {"usuario": usuario})
+
+    
     
 @sessionInicioRequerida
 @rolRequerido(RolChoices.INFLUENCER)
