@@ -33,12 +33,12 @@
     <div class="form-container">
       <h2>Regístrate como Empresa</h2>
       <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
-      <form action="{% url 'login' %}" class="form" method="POST">
+      <form class="form" method="POST" action="{% url 'registroEmpresa' %}">
         {% csrf_token %}
         {{ usuarioForm.as_p }}
         {{ empresaForm.as_p }}
         {{ redesSocialesForm.as_p }}
-        <button type="submit" name="submit_empresa"></button>
+        <button type="submit" name="submit_empresa">Registrar</button>
       </form>
     </div>
   </main>
