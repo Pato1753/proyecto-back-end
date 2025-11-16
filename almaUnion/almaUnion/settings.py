@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-import credenciales
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -80,11 +79,11 @@ WSGI_APPLICATION = 'almaUnion.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': credenciales.DB_NAME,
-        'USER': credenciales.DB_USER,
-        'PASSWORD': credenciales.DB_PASSWORD,
-        'HOST': credenciales.DB_HOST,
-        'PORT': credenciales.DB_PORT,
+        'NAME': "almaunion",
+        'USER': "root",
+        'PASSWORD': "123456",
+        'HOST': "localhost",
+        'PORT': "3306",
         'OPTIONS': {
             'charset': 'utf8mb4',
         }

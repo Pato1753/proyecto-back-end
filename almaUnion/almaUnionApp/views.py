@@ -16,6 +16,7 @@ from almaUnionApp.forms.RegistroInfluencerForm import (RegistroUsuarioForm as Re
 from almaUnionApp.forms.ActualizarInfluencerForm import ActualizarInfluencerForm, ActualizarImagenForm
 from almaUnionApp.forms.InicioSesionForm import InicioForm as iniForm
 from .utils import sessionInicioRequerida, rolRequerido
+from almaUnionApp.forms.OportunidadesFiltro import OportunidadesFiltroForm
 
 from datetime import datetime
 
@@ -261,16 +262,50 @@ def renderTemplatePerfil(request):
 @sessionInicioRequerida
 @rolRequerido(RolChoices.INFLUENCER)
 def renderTemplateOportunidades(request):
-    uid = request.session["uid"]
-    
-    try:
-        oportunidades = Campanas.objects.all()
-    except Exception as e:
-        oportunidades = []
-        print(f"Error al obtener campañas: {e}")
-        
-    return render(request, "templatesApp/templateOportunidades.html", {"oportunidades": oportunidades})
+    """
+    Vista que lista las campañas y aplica filtros de categoría y presupuesto
+    usando parámetros GET.
+    """
+    # 1. Obtenemos todas las campañas inicialmente
+    oportunidades = Campanas.objects.all()
 
+    # 2. Instanciamos el formulario de filtro con los datos GET (si existen)
+    form = OportunidadesFiltroForm(request.GET or None)
+
+    # 3. Aplicamos los filtros si el formulario es válido (es decir, si hay datos GET)
+    if form.is_valid():
+        categoria = form.cleaned_data.get("categoria")
+        presupuesto_min = form.cleaned_data.get("presupuesto_min")
+        
+        # Filtro por Categoría
+        if categoria:  
+            oportunidades = oportunidades.filter(categoria=categoria) 
+
+        # Filtro por Presupuesto Mínimo (uso de __gte = mayor o igual)
+        if presupuesto_min is not None:
+            oportunidades = oportunidades.filter(presupuesto__gte=presupuesto_min) 
+            
+    context = {
+        'oportunidades': oportunidades, # QuerySet filtrado o completo
+        'form': form                    # Objeto Form para renderizar en el HTML
+    }
+        
+    # Asegúrate de que la ruta del template es correcta
+    return render(request, "templatesApp/templateOportunidades.html", context)
+
+
+@sessionInicioRequerida
+@rolRequerido(RolChoices.INFLUENCER)
+def detalle_oportunidad(request, pk):
+    """
+    Vista que muestra los detalles de una campaña específica.
+    """
+    campana = get_object_or_404(Campanas, pk=pk)
+    context = {
+        'campana': campana
+    }
+    # Asegúrate de que la ruta del template es correcta
+    return render(request, 'templatesApp/templateOportunidadesDetalles.html', context)
 @sessionInicioRequerida
 @rolRequerido(RolChoices.INFLUENCER)
 def seleccionarCampana(request):

@@ -1,4 +1,3 @@
-
 /* --- Reset y fuente --- */
 * {
     margin: 0;
@@ -15,8 +14,8 @@ body {
     min-height: 100vh;
 }
 
-/* --- Navbar --- */
-.navbar {  
+/* --- Navbar (Estilos reusados) --- */
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,25 +30,18 @@ body {
     font-size: 1.5rem;
     color: #1e90ff;
 }
-.logo:hover {
-    text-decoration: none;
-    opacity: 0.8;
-}
-
-.nav-links {  
+.nav-links {
     list-style: none;
     display: flex;
     gap: 1rem;
     margin-right: 150px;
 }
-
 .nav-links a {
     color: #ddd;
     text-decoration: none;
     font-size: 1.5rem;
     margin-right: 30px;
 }
-
 .nav-links a:hover {
     color: #1e90ff;
 }
@@ -87,35 +79,56 @@ body {
     color: #ddd;
 }
 
-.sidebar-list {
-    list-style: none;
+/* === ESTILOS PARA LOS CAMPOS BLANCOS (SOLUCIÓN) === */
+
+/* Estilo para los inputs y selects del formulario */
+.filter-form select,
+.filter-form input[type="number"],
+.budget-input { /* Se incluye la clase antigua budget-input para asegurar */
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #1e2835; 
+  color: #fff;
+  font-size: 0.9rem;
+  /* Limpiar apariencia predeterminada del navegador (select/number) */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-.sidebar-list li {
-    padding: 0.6rem 0;
-    color: #aaa;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.sidebar-list li:hover {
-    color: #1e90ff;
-}
-
-.budget-input {
-    width: 100%;
-    padding: 0.7rem;
-    margin-top: 0.5rem;
-    border: none;
-    border-radius: 6px;
-    background-color: #1e2835;
-    color: #fff;
-    font-size: 0.9rem;
-}
-
+.filter-form select:focus,
+.filter-form input[type="number"]:focus,
 .budget-input:focus {
-    outline: 2px solid #1e90ff;
+  outline: 2px solid #1e90ff; 
 }
+
+/* Ocultar la etiqueta <label> (si no se usa en el HTML) */
+.filter-form label {
+  display: none;
+}
+
+/* Estilo para el botón de aplicar filtros */
+.filter-btn {
+  background-color: #1e90ff; 
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.filter-btn:hover {
+  background-color: #1475d1; 
+}
+
+/* --- Fin de Estilos de Filtro --- */
+
 
 /* --- Contenido principal --- */
 .main-content {
@@ -170,6 +183,10 @@ body {
 }
 
 .review-btn {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    
     background-color: #1e2835;
     color: #1e90ff;
     border: 1px solid #1e90ff;
@@ -187,10 +204,25 @@ body {
     color: white;
 }
 
+/* --- ESTILOS DE DETALLE REUSADOS (detail-card) --- */
+
+.detail-card {
+    flex: 2; 
+    background-color: #151e29;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    min-width: 500px;
+}
+/* Otros estilos de detalle... (incluidos en la sección 6. de mi pensamiento) */
+
 /* --- Responsivo --- */
 @media (max-width: 900px) {
     .container {
         flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
     }
 
     .sidebar {

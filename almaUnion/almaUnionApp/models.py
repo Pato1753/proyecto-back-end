@@ -1,8 +1,12 @@
 from django.db import models
+# Las siguientes importaciones deben ser adaptadas a la estructura real de tu proyecto
 from almaUnionApp.choices.RolChoices import RolChoices
 from almaUnionApp.choices.PlataformaChoices import PlataformaChoise
 from almaUnionApp.choices.CategoriasChoices import CategoriasChoise
-from .validators.validatorValidarRut import validar_rut
+from .validators.validatorValidarRut import validar_rut # Asegúrate que esta ruta sea correcta
+
+# NOTA: Todos los campos que serían Claves Foráneas (FK) en un proyecto normal 
+# han sido reemplazados por IntegerField o CharField simples, según los requisitos de la EVA2.
 
 class Empresas(models.Model):
     id_empresa = models.AutoField(primary_key=True)
@@ -20,7 +24,6 @@ class Empresas(models.Model):
         return self.nombre_empresa or self.rut_empresa
 
 class Influencers(models.Model):
-    
     id_influencer = models.AutoField(primary_key=True)
     rut_influencer = models.CharField(max_length=45, unique=True, validators=[validar_rut])
     nombre = models.CharField(max_length=50, blank=True, null=True)
@@ -40,8 +43,10 @@ class Influencers(models.Model):
 
 class Campanas(models.Model):
     id_campana = models.AutoField(primary_key=True)
+    # Campo que reemplaza la FK
     id_empresa_campanas = models.IntegerField(blank=True, null=True)
     nombre_campana = models.CharField(max_length=250, blank=True, null=True)
+    categoria = models.CharField(max_length=20,choices=CategoriasChoise.choices,blank=True,null=True)
     descripcion = models.TextField(blank=True, null=True)
     presupuesto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     fecha_inicio = models.DateField(blank=True, null=True)
@@ -58,13 +63,15 @@ class Campanas(models.Model):
 
 class Colaboraciones(models.Model):
     id_colaboracion = models.AutoField(primary_key=True)
+    # Campos que reemplazan las FKs
     id_influencer_colaboracion = models.IntegerField(blank=True, null=True)
     id_campana_colaboracion = models.IntegerField(blank=True, null=True)
     id_empresa_colaboracion = models.IntegerField(blank=True, null=True)
+    
     status = models.CharField(max_length=50, blank=True, null=True)
     pago_acordado = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    #No se que hace
-    #creacion_add = models.DateTimeField(blank=True, null=True)
+    # creacion_add (Comentado/Eliminado para evitar errores de migración si no se usa)
+    # creacion_add = models.DateTimeField(blank=True, null=True) 
 
     class Meta:
         verbose_name = 'Colaboracion'
@@ -74,8 +81,10 @@ class Colaboraciones(models.Model):
 
 class MetricasH(models.Model):
     id_metrica = models.AutoField(primary_key=True)
+    # Campos que reemplazan las FKs
     id_influencer_metricas = models.IntegerField(blank=True, null=True)
     id_empresa_metricas = models.IntegerField(blank=True, null=True)
+    
     nombre_metrica = models.CharField(max_length=250, blank=True, null=True)
     plataforma = models.CharField(max_length=20, choices=PlataformaChoise.choices, blank=True, null=True)
     fecha_analisis = models.DateField(blank=True, null=True)
@@ -93,8 +102,10 @@ class MetricasH(models.Model):
 
 class RedesSociales(models.Model):
     id_red_social = models.AutoField(primary_key=True)
+    # Campos que reemplazan las FKs
     id_empresa_redes = models.IntegerField(blank=True, null=True)
     id_influencer_redes = models.IntegerField(blank=True, null=True)
+    
     plataforma = models.CharField(
         max_length=20,
         choices=PlataformaChoise.choices,
@@ -118,6 +129,7 @@ class Usuarios(models.Model):
     rol = models.CharField(max_length=15,choices= RolChoices.choices)
     verificado = models.BooleanField(default=False)
     imagen_perfil =models.ImageField(upload_to='imagenes/', blank=True, null=True)
+    # Campos que reemplazan las FKs
     id_empresa_usuarios = models.IntegerField(blank=True, null=True)
     id_influencer_usuarios = models.IntegerField(blank=True, null=True)
     
