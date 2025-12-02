@@ -16,27 +16,29 @@
     </nav>
 
     <div class="container">
+      
       <aside class="sidebar">
         <h2>Filtros de Oportunidades</h2>
-        <div class="sidebar-section">
-          <h3>Categoría</h3>
-          <ul class="sidebar-list">
-            <li>Tecnología</li>
-            <li>Moda y Belleza</li>
-            <li>Viajes y Turismo</li>
-            <li>Alimentos</li>
-          </ul>
-        </div>
-        <div class="sidebar-section">
-          <h3>Presupuesto Mínimo</h3>
-          <input
-            type="number"
-            class="budget-input"
-            placeholder="Min. Presupuesto"
-          />
-        </div>
-      </aside>
+        
+        <form method="GET" action="{% url 'oportunidades' %}" class="filter-form">
+          
+          <div class="sidebar-section">
+            <h3>Categoría</h3>
+            {{ form.categoria }} 
+          </div>
+          
+          <div class="sidebar-section">
+            <h3>Presupuesto Mínimo</h3>
+            {{ form.presupuesto_min }} 
+          </div>
+          
+          <button type="submit" class="filter-btn">Aplicar Filtros</button>
 
+          <a href="{% url 'oportunidades' %}" class="back-link" style="text-align: center; margin-top: 10px;">
+            Limpiar Filtros
+          </a>
+        </form>
+      </aside>
       <main class="main-content">
         <h1>Oportunidades Disponibles</h1>
 
@@ -46,40 +48,24 @@
           <div class="opportunity-card">
             <div class="opportunity-header">
               <span class="opportunity-name">{{ campana.nombre_campana }}</span>
-              <span class="tasks-badge"
-                >Empresa #{{ campana.id_empresa_campanas }}</span
-              >
+              <span class="tasks-badge">Categoría: {{ campana.categoria }}</span>
             </div>
 
             <p>{{ campana.descripcion|truncatechars:150 }}</p>
-            <hr
-              style="margin: 10px 0; border: 0; border-top: 1px solid #1e2835"
-            />
-              <p><b>Presupuesto:</b> ${{ campana.presupuesto | default:"A Convenir" }}</p>
-            <p>
-              <strong>Inicio:</strong> {{ campana.fecha_inicio|default:"N/A" }}
-            </p>
+            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #1e2835" />
+            <p><b>Presupuesto:</b> ${{ campana.presupuesto | default:"A Convenir" }}</p>
+            <p><strong>Inicio:</strong> {{ campana.fecha_inicio|default:"N/A" }}</p>
 
-            <form method="post" action="{% url 'seleccionarCampana' %}">
-              {% csrf_token %}
-              <input
-                type="hidden"
-                name="id_campana"
-                value="{{ campana.id_campana }}"
-              />
-              <button class="review-btn" type="submit">Ver Detalles</button>
-            </form>
+            <a href="{% url 'detalle_oportunidad' campana.id_campana %}" class="review-btn" style="text-align: center; display: block; width: 100%;">
+              Ver Detalles
+            </a>
           </div>
           {% endfor %}
         </div>
         {% else %}
-        <div
-          class="messages"
-          style="background-color: #4e1717; border-left: 4px solid #ff4d4d"
-        >
+        <div class="messages" style="background-color: #4e1717; border-left: 4px solid #ff4d4d">
           <li>
-            Actualmente no hay campañas u oportunidades de colaboración
-            disponibles.
+            Actualmente no hay campañas disponibles que coincidan con los filtros.
           </li>
         </div>
         {% endif %}

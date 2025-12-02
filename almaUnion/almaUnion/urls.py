@@ -33,7 +33,7 @@ from almaUnionApp.views import (renderTemplateMenuInicial, renderTemplateRegistr
                                 renderTemplateEliminarCampaniaOK, renderTemplateRedesSociales,
                                 renderTemplateRedesSocialesCrear, renderTemplateRedesSocialesModificar,
                                 renderTemplateRedesSocialesEliminar, renderTemplateCierreSesión,
-                                renderTemplateOportunidadesDetalles, seleccionarCampana
+                                detalle_oportunidad, seleccionarCampana
                                 )
 urlpatterns = [
     # Agrupación path admin 
@@ -78,10 +78,8 @@ urlpatterns = [
    path("campanias/EliminarOK/", renderTemplateEliminarCampaniaOK, name='eliminarCampaniasOK'),
    # Agrupación path redirección oportunidades
    path("oportunidades/", renderTemplateOportunidades, name='oportunidades'),
-   path("oportunidades/detalles/", renderTemplateOportunidadesDetalles, name='oportunidadesDetalles'),
    path('oportunidades/seleccionar/', seleccionarCampana, name='seleccionarCampana'),
-    path('oportunidades/detalle/', renderTemplateOportunidadesDetalles, name='detalleOportunidad'),
-   
+   path("oportunidades/<int:pk>/detalle/", detalle_oportunidad, name='detalle_oportunidad'),
    path("informes/", renderTemplateInformes, name='informes'),
    
 ]
